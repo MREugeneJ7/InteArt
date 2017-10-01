@@ -1,4 +1,8 @@
 
-public class Obstaculo {
+public class Obstaculo extends Miembros {
 
+	public Obstaculo()
+	{
+		name='o';
+	}
 }
