@@ -7,7 +7,6 @@ public class Entorno {
 	
 	public Entorno(int N, int M)
 	{
-		boolean carPlaced = false;
 		boolean hayMeta = false;
 		matriz = new Miembros[N][M];
 		for(int i=0;i<N;i++)
@@ -23,28 +22,17 @@ public class Entorno {
 			{
 				if(4==(int)(Math.random()*(10)))
 				{
-					if(!carPlaced)
-					{
-						matriz[i][j]=new Coche();
-						carPlaced=true;
-					}
-					else
-					{
 						matriz[i][j] = new Obstaculo();
-					}
 				}
 			}
 		}
-		if(!carPlaced)
-		{
-			int n = (int)(Math.random()*N);
-			int m = (int)(Math.random()*M);
-			matriz[n][m] = new Coche();
-		}
+		int n = (int)(Math.random()*N);
+		int m = (int)(Math.random()*M);
+		matriz[n][m] = new Coche();
 		while(!hayMeta)
 		{
-			int n = (int)(Math.random()*N);
-			int m = (int)(Math.random()*M);
+			n = (int)(Math.random()*N);
+			m = (int)(Math.random()*M);
 			if(matriz[n][m].getName()!='c')
 			{
 				matriz[n][m] = new Meta();
