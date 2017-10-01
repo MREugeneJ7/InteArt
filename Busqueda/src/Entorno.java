@@ -35,7 +35,6 @@ public class Entorno {
 			for(int j=0; j<matriz[i].length;j++)
 			{
 				System.out.print(matriz[i][j].getName());
-				if (j!=matriz[i].length-1) System.out.print("\t");
 			}
 			System.out.println();
 		}
