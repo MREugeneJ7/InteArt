@@ -9,15 +9,23 @@ public class Entorno {
 	{
 		boolean carPlaced = false;
 		matriz = new Miembros[N][M];
+		for(int i=0;i<N;i++)
+		{
+			for (int j=0; j<M;j++)
+			{
+				matriz[i][j]=new Miembros();
+			}
+		}
 		for(int i=0; i<N;i++)
 		{
 			for(int j=0; j<M;j++)
 			{
-				if(M*N==(int)Math.random()*(M*N))
+				if(i*j==(int)(Math.random()*(M*N)))
 				{
 					if(!carPlaced)
 					{
 						matriz[i][j]=new Coche();
+						carPlaced=true;
 					}
 					else
 					{
@@ -25,6 +33,12 @@ public class Entorno {
 					}
 				}
 			}
+		}
+		if(!carPlaced)
+		{
+			int n = (int)(Math.random()*N);
+			int m = (int)(Math.random()*M);
+			matriz[n][m] = new Coche();
 		}
 	}
 	
@@ -34,7 +48,8 @@ public class Entorno {
 		{
 			for(int j=0; j<matriz[i].length;j++)
 			{
-				System.out.print(matriz[i][j].getName());
+				if(matriz[i][j]!=null)
+					System.out.print(matriz[i][j].getName());
 			}
 			System.out.println();
 		}
@@ -50,5 +65,6 @@ public class Entorno {
 		int M = in.nextInt();
 		Entorno prueba = new Entorno(N,M);
 		prueba.show();
+		System.exit(0);
 	}
 };
