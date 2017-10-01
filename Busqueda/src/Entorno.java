@@ -21,7 +21,7 @@ public class Entorno {
 		{
 			for(int j=0; j<M;j++)
 			{
-				if(i*j==(int)(Math.random()*(M*N)))
+				if(4==(int)(Math.random()*(10)))
 				{
 					if(!carPlaced)
 					{
