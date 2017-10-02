@@ -109,12 +109,12 @@ public class Entorno {
                         x = in.nextInt();
                         System.out.println("Inserte y para el coche");
                         y = in.nextInt();
-                        Coordenada coche = new Coordenada(x,y);
+                        Coordenada coche = new Coordenada(x-1,y-1);
                         System.out.println("Inserte x para la meta");
                         x = in.nextInt();
                         System.out.println("Inserte y para la meta");
                         y = in.nextInt();
-                        Coordenada meta = new Coordenada(x,y);
+                        Coordenada meta = new Coordenada(x-1,y-1);
                         System.out.println("Cuantos obs?");
                         numobs = in.nextInt();
                         Coordenada obstaculos[] = new Coordenada[numobs];
@@ -124,7 +124,7 @@ public class Entorno {
                             x = in.nextInt();
                             System.out.println("Inserte y para el obstaculo");
                             y = in.nextInt();
-                            Coordenada obs = new Coordenada(x,y);
+                            Coordenada obs = new Coordenada(x-1,y-1);
                             obstaculos[i]=obs;
                             
                         }
