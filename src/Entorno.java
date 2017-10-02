@@ -57,7 +57,7 @@ public class Entorno {
 			}
 		}
 		matriz[meta.getX()][meta.getY()] = new Meta();
-		matriz[coche.getX()][meta.getY()] = new Coche();
+		matriz[coche.getX()][coche.getY()] = new Coche();
 		for(int i=0; i< obstaculos.length; i++)
 		{
 			matriz[obstaculos[i].getX()][obstaculos[i].getY()] = new Obstaculo();
@@ -78,14 +78,14 @@ public class Entorno {
 	
 	public static Entorno Menu() {
 		boolean salir = false;
-		int opcion,n,m;
+		int opcion,n,m,x,y,numobs=0;
 		Entorno prueba = new Entorno();
+		in = new Scanner(System.in);
 		
 		while (!salir) {
             System.out.println("1. Constructor aleatorio");
             System.out.println("2. Constructor manual");
-            System.out.println("3. Cambiar porcentaje");
-            System.out.println("4. Salir");
+            System.out.println("3. Salir");
             try {
             	 
                 System.out.println("Escribe una de las opciones");
@@ -98,18 +98,44 @@ public class Entorno {
                         System.out.println("Inserte M");
                         m = in.nextInt();
                         prueba = new Entorno(n,m);
+                        salir=true;
                         break;
                     case 2:
-                        System.out.println("Has seleccionado la opcion 2");
+                    	System.out.println("Inserte N");
+                        n = in.nextInt();
+                        System.out.println("Inserte M");
+                        m = in.nextInt();
+                        System.out.println("Inserte x para el coche");
+                        x = in.nextInt();
+                        System.out.println("Inserte y para el coche");
+                        y = in.nextInt();
+                        Coordenada coche = new Coordenada(x,y);
+                        System.out.println("Inserte x para la meta");
+                        x = in.nextInt();
+                        System.out.println("Inserte y para la meta");
+                        y = in.nextInt();
+                        Coordenada meta = new Coordenada(x,y);
+                        System.out.println("Cuantos obs?");
+                        numobs = in.nextInt();
+                        Coordenada obstaculos[] = new Coordenada[numobs];
+                        for(int i=0; i<numobs; i++)
+                        {
+                        	System.out.println("Inserte x para el obstaculo");
+                            x = in.nextInt();
+                            System.out.println("Inserte y para el obstaculo");
+                            y = in.nextInt();
+                            Coordenada obs = new Coordenada(x,y);
+                            obstaculos[i]=obs;
+                            
+                        }
+                        prueba = new Entorno(n,m,meta,coche,obstaculos);
+                        salir=true;
                         break;
                     case 3:
-                        System.out.println("Has seleccionado la opcion 3");
-                        break;
-                    case 4:
                         salir = true;
                         break;
                     default:
-                        System.out.println("Solo números entre 1 y 4");
+                        System.out.println("Solo números enteros entre 1 y 3");
                 }
             } catch (InputMismatchException e) {
                     System.out.println("Debes insertar un número");
