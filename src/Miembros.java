@@ -5,7 +5,7 @@ public class Miembros {
 	
 	public Miembros()
 	{
-		name = 'Â·';
+		name = '·';
 	}
 	
 	public char getName()
