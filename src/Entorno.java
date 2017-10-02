@@ -74,7 +74,14 @@ public class Entorno {
 			for(int j=0; j<matriz[i].length;j++)
 			{
 				if(matriz[i][j]!=null)
-					System.out.print(matriz[i][j].getName());
+					
+					if(matriz[i][j].getName()=='c'||matriz[i][j].getName()=='M')
+					{
+						cp.print(matriz[i][j].getName(), Attribute.BOLD, FColor.RED, BColor.NONE);
+						cp.clear();
+					}
+					else
+						System.out.print(matriz[i][j].getName());
 			}
 			System.out.println();
 		}
