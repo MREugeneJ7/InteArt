@@ -21,7 +21,7 @@ public class Coordenada {
 	
 	public boolean equals (Coordenada posicion)
 	{
-		if ((this.x == posicion.x) && (this.y == posicion.y))
+		if ((this.getX() == posicion.getX()) && (this.getY() == posicion.getY()))
 			return true;
 		else return false;
 	}
