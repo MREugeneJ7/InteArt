@@ -6,6 +6,11 @@ public class Entorno {
 	int porcentaje=10;
 	private static Scanner in;
 	
+	public Entorno()
+	{
+		matriz = new Miembros[1][1];
+		matriz[0][0] = new Miembros();
+	}
 	public Entorno(int N, int M)
 	{
 		boolean hayMeta = false;
