@@ -1,7 +1,7 @@
 
 public class Coordenada {
-	int x;
-	int y;
+	private int x;
+	private int y;
 	
 	public Coordenada (int x, int y)
 	{
@@ -21,7 +21,7 @@ public class Coordenada {
 	
 	public boolean equals (Coordenada posicion)
 	{
-		if ((this.getX() == posicion.getX()) && (this.getY() == posicion.getY()))
+		if ((this.x == posicion.getX()) && (this.y == posicion.getY()))
 			return true;
 		else return false;
 	}
