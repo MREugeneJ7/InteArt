@@ -17,5 +17,12 @@ public class Coordenada {
 	public int getY ()
 	{
 		return y;
-	}	
+	}
+	
+	public boolean equals (Coordenada posicion)
+	{
+		if ((this.x == posicion.x) && (this.y == posicion.y))
+			return true;
+		else return false;
+	}
 }
