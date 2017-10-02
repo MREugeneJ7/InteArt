@@ -3,7 +3,7 @@ import java.util.*;
 public class Entorno {
 
 	Miembros matriz[][];
-	int porcentaje=50;
+	int porcentaje=10;
 	private static Scanner in;
 	
 	public Entorno(int N, int M)
