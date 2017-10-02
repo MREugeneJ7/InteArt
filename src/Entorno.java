@@ -1,5 +1,8 @@
 import java.util.*;
 
+import com.diogonunes.jcdp.color.ColoredPrinter;
+import com.diogonunes.jcdp.color.api.Ansi.*;
+
 public class Entorno {
 
 	Miembros matriz[][];
@@ -65,6 +68,7 @@ public class Entorno {
 	}
 	public void show()
 	{
+		ColoredPrinter cp = new ColoredPrinter.Builder(1, false).build();
 		for(int i = 0; i<matriz.length; i++)
 		{
 			for(int j=0; j<matriz[i].length;j++)
