@@ -5,14 +5,15 @@ import com.diogonunes.jcdp.color.api.Ansi.*;
 
 public class Entorno {
 
-	Miembros matriz[][];
-	int porcentaje=10;
+	private Miembros matriz[][];
+	private static int porcentaje;
 	private static Scanner in;
 	
 	public Entorno()
 	{
 		matriz = new Miembros[1][1];
 		matriz[0][0] = new Miembros();
+		porcentaje = 10;
 	}
 	public Entorno(int N, int M)
 	{
@@ -96,7 +97,8 @@ public class Entorno {
 		while (!salir) {
             System.out.println("1. Constructor aleatorio");
             System.out.println("2. Constructor manual");
-            System.out.println("3. Salir");
+            System.out.println("3. Elegir porcentaje de obstaculos aleatorios");
+            System.out.println("4. Salir");
             try {
             	 
                 System.out.println("Escribe una de las opciones");
@@ -144,6 +146,11 @@ public class Entorno {
                         prueba.show();
                         break;
                     case 3:
+                    	System.out.println("Escriba el porcentaje");
+                    	x = in.nextInt();
+                    	prueba.setPorcentaje(x);
+                    	break;
+                    case 4:
                         salir = true;
                         break;
                     default:
@@ -155,6 +162,11 @@ public class Entorno {
                 }
 		}
 		return prueba;
+	}
+	
+	public void setPorcentaje(int p)
+	{
+		porcentaje = p;
 	}
 	
 	public static void main(String args[])

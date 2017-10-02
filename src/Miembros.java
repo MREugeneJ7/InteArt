@@ -1,7 +1,7 @@
 
 public class Miembros {
 
-	char name;
+	protected char name;
 	
 	public Miembros()
 	{

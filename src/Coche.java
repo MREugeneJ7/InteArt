@@ -1,6 +1,6 @@
 
 public class Coche extends Miembros {
-		boolean Sensores[];
+		private boolean Sensores[];
 		
 		
 		public Coche()
