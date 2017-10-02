@@ -41,7 +41,23 @@ public class Entorno {
 			}
 		}
 	}
-	
+	public Entorno(int N, int M, Coordenada meta, Coordenada coche, Coordenada[] obstaculos)
+	{
+		matriz = new Miembros[N][M];
+		for(int i=0;i<N;i++)
+		{
+			for (int j=0; j<M;j++)
+			{
+				matriz[i][j]=new Miembros();
+			}
+		}
+		matriz[meta.getX()][meta.getY()] = new Meta();
+		matriz[coche.getX()][meta.getY()] = new Coche();
+		for(int i=0; i< obstaculos.length; i++)
+		{
+			matriz[obstaculos[i].getX()][obstaculos[i].getY()] = new Obstaculo();
+		}
+	}
 	public void show()
 	{
 		for(int i = 0; i<matriz.length; i++)
@@ -61,7 +77,6 @@ public class Entorno {
 		in = new Scanner(System.in);
 		int N = in.nextInt();
 		System.out.println("Inserte M");
-		in = new Scanner(System.in);
 		int M = in.nextInt();
 		Entorno prueba = new Entorno(N,M);
 		prueba.show();
