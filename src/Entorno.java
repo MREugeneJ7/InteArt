@@ -109,7 +109,7 @@ public class Entorno {
                         System.out.println("Inserte M");
                         m = in.nextInt();
                         prueba = new Entorno(n,m);
-                        salir=true;
+                        prueba.show();
                         break;
                     case 2:
                     	System.out.println("Inserte N");
@@ -141,7 +141,7 @@ public class Entorno {
                             
                         }
                         prueba = new Entorno(n,m,meta,coche,obstaculos);
-                        salir=true;
+                        prueba.show();
                         break;
                     case 3:
                         salir = true;
@@ -159,8 +159,7 @@ public class Entorno {
 	
 	public static void main(String args[])
 	{
-		Entorno prueba = Entorno.Menu();
-		prueba.show();
+		Entorno.Menu();
 		System.exit(0);
 	}
 };
