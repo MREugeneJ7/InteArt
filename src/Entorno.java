@@ -135,10 +135,10 @@ public class Entorno {
                         salir = true;
                         break;
                     default:
-                        System.out.println("Solo números enteros entre 1 y 3");
+                        System.out.println("Solo numeros enteros entre 1 y 3");
                 }
             } catch (InputMismatchException e) {
-                    System.out.println("Debes insertar un número");
+                    System.out.println("Debes insertar un numero");
                     in.next();
                 }
 		}
