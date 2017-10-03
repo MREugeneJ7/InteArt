@@ -1,5 +1,7 @@
 import java.util.*;
 
+import javax.swing.table.TableModel;
+
 import com.diogonunes.jcdp.color.ColoredPrinter;
 import com.diogonunes.jcdp.color.api.Ansi.*;
 
@@ -195,10 +197,9 @@ public class Entorno {
 	{
 		porcentaje = p;
 	}
-	
-	public static void main(String args[])
-	{
-		Entorno.Menu();
-		System.exit(0);
+	public Miembros[][] getMatriz(){
+		return matriz;
 	}
+	
+
 };

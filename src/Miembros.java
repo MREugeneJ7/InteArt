@@ -12,4 +12,9 @@ public class Miembros {
 	{
 		return name;
 	}
+	
+	public String toString()
+	{
+		return Character.toString(name);
+	}
 }
