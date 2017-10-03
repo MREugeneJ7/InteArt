@@ -50,8 +50,9 @@ public class Entorno {
 			}
 		}
 	}
-	public Entorno(int N, int M, Coordenada meta, Coordenada coche, Coordenada[] obstaculos)
+	public Entorno(int N, int M, Coordenada meta, Coordenada coche, Coordenada[] obstaculos) throws ConstructorException
 	{
+		boolean fail=false;
 		matriz = new Miembros[N][M];
 		for(int i=0;i<N;i++)
 		{
@@ -60,11 +61,29 @@ public class Entorno {
 				matriz[i][j]=new Miembros();
 			}
 		}
+		if(meta.equals(coche))
+			throw new ConstructorException("Coche no existente");
 		matriz[meta.getX()][meta.getY()] = new Meta();
 		matriz[coche.getX()][coche.getY()] = new Coche();
 		for(int i=0; i< obstaculos.length; i++)
 		{
-			matriz[obstaculos[i].getX()][obstaculos[i].getY()] = new Obstaculo();
+			if(obstaculos[i].equals(coche)||obstaculos[i].equals(meta))
+			{
+				fail = true;
+			}
+			else
+			{
+				matriz[obstaculos[i].getX()][obstaculos[i].getY()] = new Obstaculo();
+			}
+		}
+		try
+		{
+			if (fail)
+				throw new ConstructorException("Obstaculos Conflictivos eliminados");
+		}
+		catch(ConstructorException e)
+		{
+			System.out.println(e.getMessage());
 		}
 	}
 	public void show()
@@ -142,8 +161,16 @@ public class Entorno {
                             obstaculos[i]=obs;
                             
                         }
-                        prueba = new Entorno(n,m,meta,coche,obstaculos);
-                        prueba.show();
+					try {
+						prueba = new Entorno(n,m,meta,coche,obstaculos);
+						prueba.show();
+					} catch (ConstructorException e) {
+						System.out.println(e.getMessage());
+					}
+					catch (ArrayIndexOutOfBoundsException e)
+					{
+						System.out.println("Alguno de lo miembros estaba fuera de la matriz");
+					}
                         break;
                     case 3:
                     	System.out.println("Escriba el porcentaje");
