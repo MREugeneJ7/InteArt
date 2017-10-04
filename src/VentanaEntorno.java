@@ -46,7 +46,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		panelContenido.revalidate();
 		pack();
 	}
-	
+
 	public VentanaEntorno(Entorno x)
 	{
 		panelContenido = new JPanel();
@@ -69,31 +69,31 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		changePercent.addActionListener(this);
 		matriz.getModel().addTableModelListener(this);
 		layout.setHorizontalGroup(
-				   layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				   	  .addGroup(layout.createSequentialGroup()
-				      .addComponent(N)
-				      .addComponent(M)
-				      .addComponent(dibujar)
-			          .addComponent(percent)
-				      .addComponent(changePercent))
-				   	  .addComponent(matriz)
-				   	  .addGroup(layout.createSequentialGroup()
-				   			.addComponent(aviso)
-				   			.addComponent(info))
+				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(N)
+						.addComponent(M)
+						.addComponent(dibujar)
+						.addComponent(percent)
+						.addComponent(changePercent))
+				.addComponent(matriz)
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(aviso)
+						.addComponent(info))
 				);
 		layout.setVerticalGroup(
-				   layout.createSequentialGroup()
-				      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-				           .addComponent(N)
-				           .addComponent(M)
-				           .addComponent(dibujar)
-				           .addComponent(percent)
-				           .addComponent(changePercent))
-				      .addComponent(matriz)
-				      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-				    		  .addComponent(aviso)
-				    		  .addComponent(info))
-		);
+				layout.createSequentialGroup()
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(N)
+						.addComponent(M)
+						.addComponent(dibujar)
+						.addComponent(percent)
+						.addComponent(changePercent))
+				.addComponent(matriz)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(aviso)
+						.addComponent(info))
+				);
 		this.setContentPane(panelContenido);
 		this.setTitle("Coche Inteligente");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -106,29 +106,29 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 
 	public void tableChanged(TableModelEvent e) {
 		int row = e.getFirstRow();
-        int column = e.getColumn();
-        TableModel model = (TableModel)e.getSource();
-        Object data = model.getValueAt(row, column);
-        if("c".equals(data))
-        {
-        	backEnd.setMatriz(row,column,new Coche());
-        }
-        else if("M".equals(data))
-        {
-        	backEnd.setMatriz(row,column,new Meta());
-        }
-        else if("o".equals(data))
-        {
-        	backEnd.setMatriz(row,column,new Obstaculo());
-        }
-        else
-        {
-        	backEnd.setMatriz(row,column,new Miembros());
-        }
-        aviso.setVisible(!backEnd.test());
-        info.setText("Manual Override");
-        panelContenido.revalidate();
-        pack();
+		int column = e.getColumn();
+		TableModel model = (TableModel)e.getSource();
+		Object data = model.getValueAt(row, column);
+		if("c".equals(data))
+		{
+			backEnd.setMatriz(row,column,new Coche());
+		}
+		else if("M".equals(data))
+		{
+			backEnd.setMatriz(row,column,new Meta());
+		}
+		else if("o".equals(data))
+		{
+			backEnd.setMatriz(row,column,new Obstaculo());
+		}
+		else
+		{
+			backEnd.setMatriz(row,column,new Miembros());
+		}
+		aviso.setVisible(!backEnd.test());
+		info.setText("Manual Override");
+		panelContenido.revalidate();
+		pack();
 	}
-	
+
 }

@@ -10,7 +10,7 @@ public class Entorno {
 	private Miembros matriz[][];
 	private static int porcentaje;
 	private static Scanner in;
-	
+
 	public Entorno()
 	{
 		matriz = new Miembros[1][1];
@@ -36,7 +36,7 @@ public class Entorno {
 			{
 				if(porcentaje>(int)(Math.random()*(100)))
 				{
-						matriz[i][j] = new Obstaculo();
+					matriz[i][j] = new Obstaculo();
 				}
 			}
 		}
@@ -98,7 +98,7 @@ public class Entorno {
 			for(int j=0; j<matriz[i].length;j++)
 			{
 				if(matriz[i][j]!=null)
-					
+
 					if(matriz[i][j].getName()=='c'||matriz[i][j].getName()=='M')
 					{
 						cp.print(matriz[i][j].getName(), Attribute.BOLD, FColor.GREEN, BColor.NONE);
@@ -110,65 +110,65 @@ public class Entorno {
 			System.out.println();
 		}
 	}
-	
+
 	public static Entorno Menu() {
 		boolean salir = false;
 		int opcion,n,m,x,y,numobs=0;
 		Entorno prueba = new Entorno();
 		in = new Scanner(System.in);
-		
+
 		while (!salir) {
-            System.out.println("1. Constructor aleatorio");
-            System.out.println("2. Constructor manual");
-            System.out.println("3. Elegir porcentaje de obstaculos aleatorios");
-            System.out.println("4. Salir");
-            try {
-            	 
-                System.out.println("Escribe una de las opciones");
-                opcion = in.nextInt();
- 
-                switch (opcion) {
-                    case 1:
-                        System.out.println("Inserte N");
-                        n = in.nextInt();
-                        System.out.println("Inserte M");
-                        m = in.nextInt();
+			System.out.println("1. Constructor aleatorio");
+			System.out.println("2. Constructor manual");
+			System.out.println("3. Elegir porcentaje de obstaculos aleatorios");
+			System.out.println("4. Salir");
+			try {
+
+				System.out.println("Escribe una de las opciones");
+				opcion = in.nextInt();
+
+				switch (opcion) {
+				case 1:
+					System.out.println("Inserte N");
+					n = in.nextInt();
+					System.out.println("Inserte M");
+					m = in.nextInt();
 					try {
 						prueba = new Entorno(n,m);
 						prueba.show();
 					} catch (ConstructorException e1) {
 						System.out.println(e1.getMessage());
 					}
-                        break;
-                    case 2:
-                    	System.out.println("Inserte N");
-                        n = in.nextInt();
-                        System.out.println("Inserte M");
-                        m = in.nextInt();
-                        System.out.println("Inserte x para el coche");
-                        x = in.nextInt();
-                        System.out.println("Inserte y para el coche");
-                        y = in.nextInt();
+					break;
+				case 2:
+					System.out.println("Inserte N");
+					n = in.nextInt();
+					System.out.println("Inserte M");
+					m = in.nextInt();
+					System.out.println("Inserte x para el coche");
+					x = in.nextInt();
+					System.out.println("Inserte y para el coche");
+					y = in.nextInt();
 
-                        Coordenada coche = new Coordenada(x-1,y-1);
-                        System.out.println("Inserte x para la meta");
-                        x = in.nextInt();
-                        System.out.println("Inserte y para la meta");
-                        y = in.nextInt();
-                        Coordenada meta = new Coordenada(x-1,y-1);
-                        System.out.println("Cuantos obs?");
-                        numobs = in.nextInt();
-                        Coordenada obstaculos[] = new Coordenada[numobs];
-                        for(int i=0; i<numobs; i++)
-                        {
-                        	System.out.println("Inserte x para el obstaculo");
-                            x = in.nextInt();
-                            System.out.println("Inserte y para el obstaculo");
-                            y = in.nextInt();
-                            Coordenada obs = new Coordenada(x-1,y-1);
-                            obstaculos[i]=obs;
-                            
-                        }
+					Coordenada coche = new Coordenada(x-1,y-1);
+					System.out.println("Inserte x para la meta");
+					x = in.nextInt();
+					System.out.println("Inserte y para la meta");
+					y = in.nextInt();
+					Coordenada meta = new Coordenada(x-1,y-1);
+					System.out.println("Cuantos obs?");
+					numobs = in.nextInt();
+					Coordenada obstaculos[] = new Coordenada[numobs];
+					for(int i=0; i<numobs; i++)
+					{
+						System.out.println("Inserte x para el obstaculo");
+						x = in.nextInt();
+						System.out.println("Inserte y para el obstaculo");
+						y = in.nextInt();
+						Coordenada obs = new Coordenada(x-1,y-1);
+						obstaculos[i]=obs;
+
+					}
 					try {
 						prueba = new Entorno(n,m,meta,coche,obstaculos);
 						prueba.show();
@@ -179,26 +179,26 @@ public class Entorno {
 					{
 						System.out.println("Alguno de lo miembros estaba fuera de la matriz");
 					}
-                        break;
-                    case 3:
-                    	System.out.println("Escriba el porcentaje");
-                    	x = in.nextInt();
-                    	prueba.setPorcentaje(x);
-                    	break;
-                    case 4:
-                        salir = true;
-                        break;
-                    default:
-                        System.out.println("Solo numeros enteros entre 1 y 3");
-                }
-            } catch (InputMismatchException e) {
-                    System.out.println("Debes insertar un numero");
-                    in.next();
-                }
+					break;
+				case 3:
+					System.out.println("Escriba el porcentaje");
+					x = in.nextInt();
+					prueba.setPorcentaje(x);
+					break;
+				case 4:
+					salir = true;
+					break;
+				default:
+					System.out.println("Solo numeros enteros entre 1 y 3");
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Debes insertar un numero");
+				in.next();
+			}
 		}
 		return prueba;
 	}
-	
+
 	public void setPorcentaje(int p)
 	{
 		porcentaje = p;
@@ -224,6 +224,6 @@ public class Entorno {
 			}
 		return ((coches==1)&&(metas==1));
 	}
-	
+
 
 };
