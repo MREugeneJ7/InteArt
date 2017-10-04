@@ -1,5 +1,7 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import java.awt.Toolkit;
 import java.awt.event.*;
 
 public class VentanaEntorno extends JFrame implements ActionListener {
@@ -28,6 +30,7 @@ public class VentanaEntorno extends JFrame implements ActionListener {
 			matriz.setTableHeader(null);
 		}
 		panelContenido.revalidate();
+		pack();
 	}
 	
 	public VentanaEntorno(Entorno x)
@@ -69,8 +72,9 @@ public class VentanaEntorno extends JFrame implements ActionListener {
 		this.setContentPane(panelContenido);
 		this.setTitle("Coche Inteligente");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocation(150, 150);
-		this.setSize(250, 125);
+		this.setLocation(0, 0);
+		pack();
+		setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
 		this.setResizable(true);
 		this.setVisible(true);
 	}
