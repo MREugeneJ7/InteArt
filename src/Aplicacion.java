@@ -13,9 +13,18 @@ public class Aplicacion {
 			{
 				new Aplicacion();
 			}
+			else if (args[0].equals("-t"))
+			{
+				Entorno.Menu();
+				System.exit(0);
+			}
+			else
+				System.out.println("Opcion Incorrecta. Pruebe -g o -t");
 		}
-		Entorno.Menu();
-		System.exit(0);
+		else
+			new Aplicacion();
+		
+		
 	}
 
 }
