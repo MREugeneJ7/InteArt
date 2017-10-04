@@ -203,6 +203,21 @@ public class Entorno {
 	public int getPorcentaje() {
 		return porcentaje;
 	}
+	public void setMatriz(int row, int column, Miembros miembros) {
+		matriz[row][column] = miembros;	
+	}
+	public boolean test() {
+		int coches=0,metas=0;
+		for(int i=0; i<matriz.length;i++)
+			for(int j =0;j<matriz[i].length;j++)
+			{
+				if(Character.toString(matriz[i][j].getName()).equals("c"))
+					coches++;
+				if(Character.toString(matriz[i][j].getName()).equals("M"))
+					metas++;
+			}
+		return ((coches==1)&&(metas==1));
+	}
 	
 
 };
