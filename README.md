@@ -4,7 +4,7 @@
 
 ### Principales
 
-- [ ] Comprobar que no pongas las cosas fuera de la matriz
+- [x] Comprobar que no pongas las cosas fuera de la matriz
 - [x] En la clase coordenada sobreescribir el operador == o crear un equals
 - [x] Hacer la comprobación de que no pones el obstaculo encima de la meta o el coche
 - [x] Hacer el menu reutilizable que puse que saliese en cada llamada para poder probarlo y eso no es nada óptimo
