@@ -200,6 +200,9 @@ public class Entorno {
 	public Miembros[][] getMatriz(){
 		return matriz;
 	}
+	public int getPorcentaje() {
+		return porcentaje;
+	}
 	
 
 };
