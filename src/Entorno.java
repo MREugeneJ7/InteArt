@@ -17,8 +17,10 @@ public class Entorno {
 		matriz[0][0] = new Miembros();
 		porcentaje = 10;
 	}
-	public Entorno(int N, int M)
+	public Entorno(int N, int M) throws ConstructorException
 	{
+		if(N<=0||M<=0||(M==1&&N==1))
+			throw new ConstructorException("Tamaño no valido");
 		boolean hayMeta = false;
 		matriz = new Miembros[N][M];
 		for(int i=0;i<N;i++)
@@ -131,8 +133,12 @@ public class Entorno {
                         n = in.nextInt();
                         System.out.println("Inserte M");
                         m = in.nextInt();
-                        prueba = new Entorno(n,m);
-                        prueba.show();
+					try {
+						prueba = new Entorno(n,m);
+						prueba.show();
+					} catch (ConstructorException e1) {
+						System.out.println(e1.getMessage());
+					}
                         break;
                     case 2:
                     	System.out.println("Inserte N");
