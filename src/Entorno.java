@@ -19,12 +19,8 @@ public class Entorno {
 		if(n <= 0 || m <= 0 || (m == 1 && n == 1)) throw new ConstructorException("Tamaño no valido");
 		boolean hayMeta = false;
 		matriz = new Miembros[n][m];
-		for(int i = 0;i < n;i++)
-			for (int j = 0; j < m;j++)
-				matriz[i][j] = new Miembros();
-		for(int i = 0; i < n;i++)
-			for(int j = 0; j < m;j++)
-				if(porcentaje>(int)(Math.random() * (100))) matriz[i][j] = new Obstaculo();
+		for(int i = 0;i < n;i++) for (int j = 0; j < m;j++) matriz[i][j] = new Miembros();
+		for(int i = 0; i < n;i++) for(int j = 0; j < m;j++) if(porcentaje>(int)(Math.random() * (100))) matriz[i][j] = new Obstaculo();
 		int nTemp = (int)(Math.random() * n);
 		int mTemp = (int)(Math.random() * m);
 		matriz[nTemp][mTemp] = new Coche();
@@ -40,14 +36,11 @@ public class Entorno {
 	public Entorno(int n, int m, Coordenada meta, Coordenada coche, Coordenada[] obstaculos) throws ConstructorException {
 		boolean fail = false;
 		matriz = new Miembros[n][m];
-		for(int i = 0;i < n;i++)
-			for (int j = 0; j < m;j++)
-				matriz[i][j] = new Miembros();
+		for(int i = 0;i < n;i++) for (int j = 0; j < m;j++) matriz[i][j] = new Miembros();
 		if(meta.equals(coche)) throw new ConstructorException("Coche no existente");
 		matriz[meta.getX()][meta.getY()] = new Meta();
 		matriz[coche.getX()][coche.getY()] = new Coche();
-		for(int i = 0; i < obstaculos.length; i++)
-			if(obstaculos[i].equals(coche) || obstaculos[i].equals(meta)) fail = true;
+		for(int i = 0; i < obstaculos.length; i++) if(obstaculos[i].equals(coche) || obstaculos[i].equals(meta)) fail = true;
 			else matriz[obstaculos[i].getX()][obstaculos[i].getY()] = new Obstaculo();
 		try {
 			if (fail) throw new ConstructorException("Obstaculos Conflictivos eliminados");
@@ -57,9 +50,8 @@ public class Entorno {
 	}
 	public void show() {
 		ColoredPrinter cp = new ColoredPrinter.Builder(1, false).build();
-		for(int i = 0; i < matriz.length; i++) {
-			for(int j = 0; j < matriz[i].length;j++)
-				if(matriz[i][j] != null) if(matriz[i][j].getName() == 'c' || matriz[i][j].getName() == 'M') {
+		for(int i = 0; i < matriz.length; i++) { 
+			for(int j = 0; j < matriz[i].length;j++) if(matriz[i][j] != null) if(matriz[i][j].getName() == 'c' || matriz[i][j].getName() == 'M') {
 					cp.print(matriz[i][j].getName(), Attribute.BOLD, FColor.GREEN, BColor.NONE);
 					cp.clear();
 				} else System.out.print(matriz[i][j].getName());
@@ -165,8 +157,7 @@ public class Entorno {
 	}
 	public boolean test() {
 		int coches = 0,metas = 0;
-		for(int i = 0; i < matriz.length;i++)
-			for(int j = 0;j < matriz[i].length;j++) {
+		for(int i = 0; i < matriz.length;i++) for(int j = 0;j < matriz[i].length;j++) {
 				if(Character.toString(matriz[i][j].getName()).equals("c")) coches++;
 				if(Character.toString(matriz[i][j].getName()).equals("M")) metas++;
 			}
