@@ -62,8 +62,7 @@ public class Entorno {
 				if(matriz[i][j] != null) if(matriz[i][j].getName() == 'c' || matriz[i][j].getName() == 'M') {
 					cp.print(matriz[i][j].getName(), Attribute.BOLD, FColor.GREEN, BColor.NONE);
 					cp.clear();
-				} else
-					System.out.print(matriz[i][j].getName());
+				} else System.out.print(matriz[i][j].getName());
 			System.out.println();
 		}
 	}
