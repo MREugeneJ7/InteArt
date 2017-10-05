@@ -9,15 +9,13 @@ public class Entorno {
 	private static int porcentaje;
 	private static Scanner in;
 
-	public Entorno()
-	{
+	public Entorno() {
 		matriz = new Miembros[1][1];
 		matriz[0][0] = new Miembros();
 		porcentaje = 10;
 	}
 
-	public Entorno(int n, int m) throws ConstructorException
-	{
+	public Entorno(int n, int m) throws ConstructorException {
 		if(n <= 0 || m <= 0 || (m == 1 && n == 1)) throw new ConstructorException("Tamaño no valido");
 		boolean hayMeta = false;
 		matriz = new Miembros[n][m];
@@ -30,17 +28,16 @@ public class Entorno {
 		int nTemp = (int)(Math.random() * n);
 		int mTemp = (int)(Math.random() * m);
 		matriz[nTemp][mTemp] = new Coche();
-		while(!hayMeta){
+		while(!hayMeta) {
 			nTemp = (int)(Math.random() * n);
 			mTemp = (int)(Math.random() * m);
-			if(matriz[nTemp][mTemp].getName() != 'c'){
+			if(matriz[nTemp][mTemp].getName() != 'c') {
 				matriz[nTemp][mTemp] = new Meta();
 				hayMeta = true;
 			}
 		}
 	}
-	public Entorno(int n, int m, Coordenada meta, Coordenada coche, Coordenada[] obstaculos) throws ConstructorException
-	{
+	public Entorno(int n, int m, Coordenada meta, Coordenada coche, Coordenada[] obstaculos) throws ConstructorException {
 		boolean fail = false;
 		matriz = new Miembros[n][m];
 		for(int i = 0;i < n;i++)
@@ -52,14 +49,13 @@ public class Entorno {
 		for(int i = 0; i < obstaculos.length; i++)
 			if(obstaculos[i].equals(coche) || obstaculos[i].equals(meta)) fail = true;
 			else matriz[obstaculos[i].getX()][obstaculos[i].getY()] = new Obstaculo();
-		try{
+		try {
 			if (fail) throw new ConstructorException("Obstaculos Conflictivos eliminados");
 		} catch(ConstructorException e){
 			System.out.println(e.getMessage());
 		}
 	}
-	public void show()
-	{
+	public void show() {
 		ColoredPrinter cp = new ColoredPrinter.Builder(1, false).build();
 		for(int i = 0; i < matriz.length; i++) {
 			for(int j = 0; j < matriz[i].length;j++)
@@ -78,7 +74,7 @@ public class Entorno {
 		Entorno prueba = new Entorno();
 		in = new Scanner(System.in);
 
-		while (!salir){
+		while (!salir) {
 			System.out.println("1. Constructor aleatorio");
 			System.out.println("2. Constructor manual");
 			System.out.println("3. Elegir porcentaje de obstaculos aleatorios");
@@ -120,7 +116,7 @@ public class Entorno {
 					System.out.println("Cuantos obs?");
 					numObs = in.nextInt();
 					Coordenada obstaculos[] = new Coordenada[numObs];
-					for(int i = 0; i < numObs; i++){
+					for(int i = 0; i < numObs; i++) {
 						System.out.println("Inserte x para el obstaculo");
 						x = in.nextInt();
 						System.out.println("Inserte y para el obstaculo");
@@ -133,7 +129,7 @@ public class Entorno {
 						prueba.show();
 					} catch (ConstructorException e) {
 						System.out.println(e.getMessage());
-					} catch (ArrayIndexOutOfBoundsException e){
+					} catch (ArrayIndexOutOfBoundsException e) {
 						System.out.println("Alguno de lo miembros estaba fuera de la matriz");
 					}
 					break;
@@ -156,10 +152,10 @@ public class Entorno {
 		return prueba;
 	}
 
-	public void setPorcentaje(int p){
+	public void setPorcentaje(int p) {
 		porcentaje = p;
 	}
-	public Miembros[][] getMatriz(){
+	public Miembros[][] getMatriz( ){
 		return matriz;
 	}
 	public int getPorcentaje() {
@@ -171,8 +167,7 @@ public class Entorno {
 	public boolean test() {
 		int coches = 0,metas = 0;
 		for(int i = 0; i < matriz.length;i++)
-			for(int j = 0;j < matriz[i].length;j++)
-			{
+			for(int j = 0;j < matriz[i].length;j++) {
 				if(Character.toString(matriz[i][j].getName()).equals("c")) coches++;
 				if(Character.toString(matriz[i][j].getName()).equals("M")) metas++;
 			}

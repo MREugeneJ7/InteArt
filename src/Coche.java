@@ -1,11 +1,10 @@
 
 public class Coche extends Miembros {
-		private boolean Sensores[];
+		private boolean sensores[];
 		
 		
-		public Coche()
-		{
-			Sensores = new boolean[4];
+		public Coche() {
+			sensores = new boolean[4];
 			name = 'c';
 		}
 }

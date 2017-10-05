@@ -3,18 +3,15 @@ public class Miembros {
 
 	protected char name;
 	
-	public Miembros()
-	{
+	public Miembros() {
 		name = '.';
 	}
 	
-	public char getName()
-	{
+	public char getName() {
 		return name;
 	}
 	
-	public String toString()
-	{
+	public String toString() {
 		return Character.toString(name);
 	}
 }

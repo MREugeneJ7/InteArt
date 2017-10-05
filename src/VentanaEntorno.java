@@ -16,20 +16,16 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private static final long serialVersionUID = 1L;
 	private Entorno backEnd;
 	private JTable matriz;
-	private JTextField N,M,percent;
+	private JTextField n,m,percent;
 	private JPanel panelContenido;
 	private JButton changePercent;
 	private JLabel aviso,info;
 	public void actionPerformed(ActionEvent e) {
 		Object[]dummy;
-		if(e.getSource()==changePercent)
-		{
-			backEnd.setPorcentaje(Integer.parseInt(percent.getText()));
-		}
-		else
-		{
+		if(e.getSource()==changePercent) backEnd.setPorcentaje(Integer.parseInt(percent.getText()));
+		else {
 			try {
-				backEnd= new Entorno(Integer.parseInt(N.getText()),Integer.parseInt(M.getText()));
+				backEnd= new Entorno(Integer.parseInt(n.getText()),Integer.parseInt(m.getText()));
 				aviso.setVisible(false);
 			} catch (NumberFormatException e1) {
 				aviso.setVisible(true);
@@ -42,25 +38,24 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			matriz.setTableHeader(null);
 			matriz.getModel().addTableModelListener(this);
 		}
-		info.setText("DIM:"+backEnd.getMatriz().length+"x"+backEnd.getMatriz()[0].length+"|Porecntaje:"+backEnd.getPorcentaje());
+		info.setText("DIM:" + backEnd.getMatriz().length + "x" + backEnd.getMatriz()[0].length + "|Porecntaje:" + backEnd.getPorcentaje());
 		panelContenido.revalidate();
 		pack();
 	}
 
-	public VentanaEntorno(Entorno x)
-	{
+	public VentanaEntorno(Entorno x) {
 		panelContenido = new JPanel();
 		GroupLayout layout = new GroupLayout(panelContenido);
 		panelContenido.setLayout(layout);
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
-		this.backEnd=x;
+		this.backEnd = x;
 		aviso = new JLabel("Matriz incorrecta");
-		info = new JLabel("DIM:"+backEnd.getMatriz().length+"x"+backEnd.getMatriz()[0].length+"|Porecntaje:"+backEnd.getPorcentaje());
+		info = new JLabel("DIM:" + backEnd.getMatriz().length + "x" + backEnd.getMatriz()[0].length + "|Porecntaje:" + backEnd.getPorcentaje());
 		aviso.setVisible(false);
 		aviso.setForeground(Color.red);
-		N = new JTextField(4);
-		M = new JTextField(4);
+		n = new JTextField(4);
+		m = new JTextField(4);
 		percent = new JTextField(Integer.toString(backEnd.getPorcentaje()));
 		JButton dibujar = new JButton("Crear Matriz");
 		changePercent = new JButton("%");
@@ -71,8 +66,8 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		layout.setHorizontalGroup(
 				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup()
-						.addComponent(N)
-						.addComponent(M)
+						.addComponent(n)
+						.addComponent(m)
 						.addComponent(dibujar)
 						.addComponent(percent)
 						.addComponent(changePercent))
@@ -84,8 +79,8 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		layout.setVerticalGroup(
 				layout.createSequentialGroup()
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(N)
-						.addComponent(M)
+						.addComponent(n)
+						.addComponent(m)
 						.addComponent(dibujar)
 						.addComponent(percent)
 						.addComponent(changePercent))
@@ -109,22 +104,10 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		int column = e.getColumn();
 		TableModel model = (TableModel)e.getSource();
 		Object data = model.getValueAt(row, column);
-		if("c".equals(data))
-		{
-			backEnd.setMatrizCell(row,column,new Coche());
-		}
-		else if("M".equals(data))
-		{
-			backEnd.setMatrizCell(row,column,new Meta());
-		}
-		else if("o".equals(data))
-		{
-			backEnd.setMatrizCell(row,column,new Obstaculo());
-		}
-		else
-		{
-			backEnd.setMatrizCell(row,column,new Miembros());
-		}
+		if("c".equals(data)) backEnd.setMatrizCell(row,column,new Coche());
+		else if("M".equals(data)) backEnd.setMatrizCell(row,column,new Meta());
+		else if("o".equals(data)) backEnd.setMatrizCell(row,column,new Obstaculo());
+		else backEnd.setMatrizCell(row,column,new Miembros());
 		aviso.setVisible(!backEnd.test());
 		info.setText("Manual Override");
 		panelContenido.revalidate();
