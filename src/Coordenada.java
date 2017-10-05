@@ -1,4 +1,11 @@
-
+/**
+ * IA Pract1
+ * Coordenada.java
+ * Purpose: Clase que guarda un par de enteros para indicar la posición de los miembros de la matriz.
+ *
+ * @author G.P.A (Grupo Programadores Mmateur)
+ * @version 0.7.i 5/10/2017
+ */
 public class Coordenada {
 	private int x;
 	private int y;
