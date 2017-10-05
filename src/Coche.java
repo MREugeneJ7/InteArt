@@ -4,7 +4,7 @@
  * Purpose: Clase que define el coche inteligente.
  *
  * @author G.P.A (Gamusinos, Perros y Aerodirigibles)
- * @version 0.7.i 5/10/2017
+ * @version 0.7.j 5/10/2017
  */
 
 public class Coche extends Miembros {

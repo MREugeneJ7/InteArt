@@ -4,7 +4,7 @@
  * Purpose: Clase que contiene el metodo main y enlaza la interfaz grafica con el algoritmo.
  *
  * @author G.P.A (Grupo Pringados Adorables)
- * @version 0.7.i 5/10/2017
+ * @version 0.7.j 5/10/2017
  */
 public class Aplicacion {
 
