@@ -27,12 +27,12 @@ public class Entorno {
 		for(int i = 0; i < n;i++)
 			for(int j = 0; j < m;j++)
 				if(porcentaje>(int)(Math.random() * (100))) matriz[i][j] = new Obstaculo();
-		int nTemp = (int)(Math.random()*n);
-		int mTemp = (int)(Math.random()*m);
+		int nTemp = (int)(Math.random() * n);
+		int mTemp = (int)(Math.random() * m);
 		matriz[nTemp][mTemp] = new Coche();
 		while(!hayMeta){
-			nTemp = (int)(Math.random()*n);
-			mTemp = (int)(Math.random()*m);
+			nTemp = (int)(Math.random() * n);
+			mTemp = (int)(Math.random() * m);
 			if(matriz[nTemp][mTemp].getName() != 'c'){
 				matriz[nTemp][mTemp] = new Meta();
 				hayMeta = true;
