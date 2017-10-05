@@ -41,7 +41,7 @@ public class Entorno {
 		matriz[meta.getX()][meta.getY()] = new Meta();
 		matriz[coche.getX()][coche.getY()] = new Coche();
 		for(int i = 0; i < obstaculos.length; i++) if(obstaculos[i].equals(coche) || obstaculos[i].equals(meta)) fail = true;
-			else matriz[obstaculos[i].getX()][obstaculos[i].getY()] = new Obstaculo();
+		else matriz[obstaculos[i].getX()][obstaculos[i].getY()] = new Obstaculo();
 		try {
 			if (fail) throw new ConstructorException("Obstaculos Conflictivos eliminados");
 		} catch(ConstructorException e){
@@ -52,9 +52,9 @@ public class Entorno {
 		ColoredPrinter cp = new ColoredPrinter.Builder(1, false).build();
 		for(int i = 0; i < matriz.length; i++) { 
 			for(int j = 0; j < matriz[i].length;j++) if(matriz[i][j] != null) if(matriz[i][j].getName() == 'c' || matriz[i][j].getName() == 'M') {
-					cp.print(matriz[i][j].getName(), Attribute.BOLD, FColor.GREEN, BColor.NONE);
-					cp.clear();
-				} else System.out.print(matriz[i][j].getName());
+				cp.print(matriz[i][j].getName(), Attribute.BOLD, FColor.GREEN, BColor.NONE);
+				cp.clear();
+			} else System.out.print(matriz[i][j].getName());
 			System.out.println();
 		}
 	}
@@ -158,9 +158,9 @@ public class Entorno {
 	public boolean test() {
 		int coches = 0,metas = 0;
 		for(int i = 0; i < matriz.length;i++) for(int j = 0;j < matriz[i].length;j++) {
-				if(Character.toString(matriz[i][j].getName()).equals("c")) coches++;
-				if(Character.toString(matriz[i][j].getName()).equals("M")) metas++;
-			}
+			if(Character.toString(matriz[i][j].getName()).equals("c")) coches++;
+			if(Character.toString(matriz[i][j].getName()).equals("M")) metas++;
+		}
 		return ((coches == 1) && (metas == 1));
 	}
 
