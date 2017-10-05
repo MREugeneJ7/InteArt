@@ -15,7 +15,7 @@ public class Aplicacion {
 			}
 			else if (args[0].equals("-t"))
 			{
-				Entorno.Menu();
+				Entorno.menu();
 				System.exit(0);
 			}
 			else

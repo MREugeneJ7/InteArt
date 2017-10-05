@@ -111,19 +111,19 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		Object data = model.getValueAt(row, column);
 		if("c".equals(data))
 		{
-			backEnd.setMatriz(row,column,new Coche());
+			backEnd.setMatrizCell(row,column,new Coche());
 		}
 		else if("M".equals(data))
 		{
-			backEnd.setMatriz(row,column,new Meta());
+			backEnd.setMatrizCell(row,column,new Meta());
 		}
 		else if("o".equals(data))
 		{
-			backEnd.setMatriz(row,column,new Obstaculo());
+			backEnd.setMatrizCell(row,column,new Obstaculo());
 		}
 		else
 		{
-			backEnd.setMatriz(row,column,new Miembros());
+			backEnd.setMatrizCell(row,column,new Miembros());
 		}
 		aviso.setVisible(!backEnd.test());
 		info.setText("Manual Override");
