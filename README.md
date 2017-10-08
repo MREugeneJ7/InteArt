@@ -15,7 +15,6 @@
 - [ ] Hacer un constructor por fichero
 - [x] Poner comentarios al codigo
 - [x] Hacer el metodo para cambiar el porcentaje
-- [ ] Definir variables estaticas con el tamaño maximo
+- [x] Definir variables estaticas con el tamaño maximo
 - [x] Buscar como ponerle un colorcito al coche y a la meta
-- [ ] Crear metodos destructores que java es muy nazi y si no creas constructores no invoca al recoge basuras y se peta de objetos la memoria
 - [x] Hacer un GUI

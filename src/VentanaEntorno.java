@@ -14,7 +14,7 @@ import java.awt.event.*;
  * Purpose: Clase que define la GUI.
  *
  * @author G.P.A (GUI Preciosa y Asombrosa)
- * @version 0.8 8/10/2017
+ * @version 0.9 8/10/2017
  */
 
 public class VentanaEntorno extends JFrame implements ActionListener, TableModelListener {

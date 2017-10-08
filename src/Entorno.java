@@ -9,11 +9,12 @@ import com.diogonunes.jcdp.color.api.Ansi.*;
  * Purpose: Se encarga de controlar la matriz que contiene el coche y los obstaculos.
  *
  * @author G.P.A (Grupo Putos Amos)
- * @version 0.8 8/10/2017
+ * @version 0.9 8/10/2017
  */
 
 public class Entorno {
-
+	
+	private static final int N_MAX = 200, M_MAX = 200;
 	private Miembros matriz[][];
 	private static int porcentaje;
 	private static Scanner in;
@@ -32,7 +33,7 @@ public class Entorno {
 	 * @throws ConstructorException Cuando el tama�o de la matriz no es valido
 	 */
 	public Entorno(int n, int m) throws ConstructorException {
-		if(n <= 0 || m <= 0 || (m == 1 && n == 1)) throw new ConstructorException("Tamaño no valido");
+		if(n <= 0 || m <= 0 || (m == 1 && n == 1) || n > N_MAX || m > M_MAX ) throw new ConstructorException("Tamaño no valido");
 		boolean hayMeta = false;
 		matriz = new Miembros[n][m];
 		for(int i = 0;i < n;i++) for (int j = 0; j < m;j++) matriz[i][j] = new Miembros();
@@ -62,7 +63,7 @@ public class Entorno {
 	 * @throws ConstructorException Cuando el tama�o de la matriz no es valido o no hay coche
 	 */
 	public Entorno(int n, int m, Coordenada meta, Coordenada coche, Coordenada[] obstaculos) throws ConstructorException {
-		if(n <= 0 || m <= 0 || (m == 1 && n == 1)) throw new ConstructorException("Tamaño no valido");
+		if(n <= 0 || m <= 0 || (m == 1 && n == 1) || n > N_MAX || m > M_MAX ) throw new ConstructorException("Tamaño no valido");
 		boolean fail = false;
 		matriz = new Miembros[n][m];
 		for(int i = 0;i < n;i++) for (int j = 0; j < m;j++) matriz[i][j] = new Miembros();

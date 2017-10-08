@@ -4,7 +4,7 @@
  * Purpose: Clase que define un miembro cualquiera de la matriz.
  *
  * @author G.P.A (Grupo Problematico y Alborotador)
- * @version 0.8 8/10/2017
+ * @version 0.9 8/10/2017
  */
 public class Miembros {
 
