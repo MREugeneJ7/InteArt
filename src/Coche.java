@@ -9,10 +9,18 @@
 
 public class Coche extends Miembros {
 		private boolean sensores[];
+		private Coordenada posMetaRel;
 		
 		/** Constructor de la clase Coche*/
 		public Coche() {
 			sensores = new boolean[4];
 			name = 'c';
+		}
+		/**
+		 * Asigna un valor a la variable que define la posicion de la meta
+		 * @param meta
+		 */
+		public void setPosMeta(Coordenada meta){
+			this.posMetaRel = meta;
 		}
 }

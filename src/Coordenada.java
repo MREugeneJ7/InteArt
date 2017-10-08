@@ -37,4 +37,12 @@ public class Coordenada {
 		if ((this.x == posicion.getX()) && (this.y == posicion.getY())) return true;
 		else return false;
 	}
+	/**
+	 * Metodo que devuelve la coordenada resultante de restar dos coordenadas
+	 * @param x Coordenada que se resta
+	 * @return Diferencia
+	 */
+	public Coordenada diff(Coordenada x) {
+		return new Coordenada(this.x - x.getX(),this.y - x.getY());
+	}
 }

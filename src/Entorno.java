@@ -17,6 +17,7 @@ public class Entorno {
 	private Miembros matriz[][];
 	private static int porcentaje;
 	private static Scanner in;
+	private Coordenada coche;
 
 	public Entorno() {
 		matriz = new Miembros[1][1];
@@ -38,6 +39,7 @@ public class Entorno {
 		for(int i = 0; i < n;i++) for(int j = 0; j < m;j++) if(porcentaje>(int)(Math.random() * (100))) matriz[i][j] = new Obstaculo();
 		int nTemp = (int)(Math.random() * n);
 		int mTemp = (int)(Math.random() * m);
+		coche = new Coordenada(nTemp,mTemp);
 		matriz[nTemp][mTemp] = new Coche();
 		while(!hayMeta) {
 			nTemp = (int)(Math.random() * n);
@@ -47,6 +49,7 @@ public class Entorno {
 				hayMeta = true;
 			}
 		}
+		((Coche)matriz[coche.getX()][coche.getY()]).setPosMeta(new Coordenada(nTemp-coche.getX(),mTemp-coche.getY()));
 	}
 	/**
 	 * Constructor manual del entorno
@@ -63,9 +66,11 @@ public class Entorno {
 		boolean fail = false;
 		matriz = new Miembros[n][m];
 		for(int i = 0;i < n;i++) for (int j = 0; j < m;j++) matriz[i][j] = new Miembros();
+		this.coche = coche;
 		if(meta.equals(coche)) throw new ConstructorException("Coche no existente");
 		matriz[meta.getX()][meta.getY()] = new Meta();
 		matriz[coche.getX()][coche.getY()] = new Coche();
+		((Coche)matriz[this.coche.getX()][this.coche.getY()]).setPosMeta(meta.diff(coche));
 		for(int i = 0; i < obstaculos.length; i++) if(obstaculos[i].equals(coche) || obstaculos[i].equals(meta)) fail = true;
 		else matriz[obstaculos[i].getX()][obstaculos[i].getY()] = new Obstaculo();
 		try {
