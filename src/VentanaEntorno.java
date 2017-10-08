@@ -14,14 +14,11 @@ import java.awt.event.*;
  * Purpose: Clase que define la GUI.
  *
  * @author G.P.A (GUI Preciosa y Asombrosa)
- * @version 0.7.j 5/10/2017
+ * @version 0.8 8/10/2017
  */
 
 public class VentanaEntorno extends JFrame implements ActionListener, TableModelListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Entorno backEnd;
 	private JTable matriz;
@@ -29,6 +26,11 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private JPanel panelContenido;
 	private JButton changePercent;
 	private JLabel aviso,info;
+	/**
+	 * Metodo que observa las acciones realizadas en la interfaz grafica
+	 * 
+	 * @param e Evento que lanzo este metodo
+	 */
 	public void actionPerformed(ActionEvent e) {
 		Object[]dummy;
 		if(e.getSource()==changePercent) backEnd.setPorcentaje(Integer.parseInt(percent.getText()));
@@ -51,7 +53,10 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		panelContenido.revalidate();
 		pack();
 	}
-
+	/**
+	 * Constructor de la ventana
+	 * @param x Entorno que se muestra en la JTable matriz
+	 */
 	public VentanaEntorno(Entorno x) {
 		panelContenido = new JPanel();
 		GroupLayout layout = new GroupLayout(panelContenido);
@@ -107,7 +112,10 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		this.setResizable(true);
 		this.setVisible(true);
 	}
-
+	/**
+	 * Metodo que observa cambios realizados en la JTable matriz
+	 * @param e Evento que lanzo este metodo
+	 */
 	public void tableChanged(TableModelEvent e) {
 		int row = e.getFirstRow();
 		int column = e.getColumn();

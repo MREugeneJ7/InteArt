@@ -9,7 +9,7 @@ import com.diogonunes.jcdp.color.api.Ansi.*;
  * Purpose: Se encarga de controlar la matriz que contiene el coche y los obstaculos.
  *
  * @author G.P.A (Grupo Putos Amos)
- * @version 0.7.j 5/10/2017
+ * @version 0.8 8/10/2017
  */
 
 public class Entorno {
@@ -23,7 +23,13 @@ public class Entorno {
 		matriz[0][0] = new Miembros();
 		porcentaje = 10;
 	}
-
+	/**
+	 * Constructor aleatorio del entorno
+	 * 
+	 * @param n Numero de filas
+	 * @param m Numero de columnas
+	 * @throws ConstructorException Cuando el tamaño de la matriz no es valido
+	 */
 	public Entorno(int n, int m) throws ConstructorException {
 		if(n <= 0 || m <= 0 || (m == 1 && n == 1)) throw new ConstructorException("TamaÃ±o no valido");
 		boolean hayMeta = false;
@@ -42,7 +48,18 @@ public class Entorno {
 			}
 		}
 	}
+	/**
+	 * Constructor manual del entorno
+	 * 
+	 * @param n Numero de filas
+	 * @param m Numero de columnas
+	 * @param coche Posicion del coche
+	 * @param meta Posicion de la meta
+	 * @param obstaculos Vector de posiciones de los obstaculos.
+	 * @throws ConstructorException Cuando el tamaño de la matriz no es valido o no hay coche
+	 */
 	public Entorno(int n, int m, Coordenada meta, Coordenada coche, Coordenada[] obstaculos) throws ConstructorException {
+		if(n <= 0 || m <= 0 || (m == 1 && n == 1)) throw new ConstructorException("TamaÃ±o no valido");
 		boolean fail = false;
 		matriz = new Miembros[n][m];
 		for(int i = 0;i < n;i++) for (int j = 0; j < m;j++) matriz[i][j] = new Miembros();
@@ -57,6 +74,9 @@ public class Entorno {
 			System.out.println(e.getMessage());
 		}
 	}
+	/**
+	 * Imprime la matriz por consola
+	 */
 	public void show() {
 		ColoredPrinter cp = new ColoredPrinter.Builder(1, false).build();
 		for(int i = 0; i < matriz.length; i++) { 
@@ -67,7 +87,9 @@ public class Entorno {
 			System.out.println();
 		}
 	}
-
+	/**
+	 * Genera el menú que permite crear la matriz por consola de forma aleatoria y manual, además de cambiar el porcentaje de aparición de obstaculos.
+	 */
 	public static Entorno menu() {
 		boolean salir = false;
 		int opcion,n,m,x,y,numObs = 0;
@@ -151,19 +173,45 @@ public class Entorno {
 		}
 		return prueba;
 	}
-
+	/**
+	 * Cambia el porcentaje de aparición de obstaculos del constructor aleatorio
+	 * 
+	 * @param p valor del porcentaje de aparición de obstaculos.
+	 */
 	public void setPorcentaje(int p) {
 		porcentaje = p;
 	}
+	/**
+	 * Devuelve la matriz
+	 * 
+	 * @return Matriz con todos los objetos
+	 */
 	public Miembros[][] getMatriz( ){
 		return matriz;
 	}
+	/**
+	 * Devuelve el porcentaje
+	 * 
+	 * @return valor del porcentaje
+	 */
 	public int getPorcentaje() {
 		return porcentaje;
 	}
+	/**
+	 * Cambia el objeto que ocupa una de las celdas de la matriz
+	 * 
+	 * @param row Fila
+	 * @param column Columna
+	 * @param miembros Nuevo objeto
+	 */
 	public void setMatrizCell(int row, int column, Miembros miembros) {
 		matriz[row][column] = miembros;	
 	}
+	/**
+	 * Comprueba que la matriz sea valida o que todavia no se ha llegado a la meta
+	 * 
+	 * @return Si hay únicamente 1 coche y 1 meta
+	 */
 	public boolean test() {
 		int coches = 0,metas = 0;
 		for(int i = 0; i < matriz.length;i++) for(int j = 0;j < matriz[i].length;j++) {
