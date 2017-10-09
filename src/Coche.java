@@ -26,6 +26,7 @@ public class Coche extends Miembros {
 		
 		public Coordenada move(boolean[] collisions){
 			Coordenada movimiento;
+			sensores = collisions;
 			if(Math.abs(posMetaRel.getX()) < Math.abs(posMetaRel.getY()) && posMetaRel.getX() > 0 )
 			{
 				movimiento = new Coordenada(0,(int)Math.signum(posMetaRel.getY()));
