@@ -23,4 +23,18 @@ public class Coche extends Miembros {
 		public void setPosMeta(Coordenada meta){
 			this.posMetaRel = meta;
 		}
+		
+		public Coordenada move(boolean[] collisions){
+			Coordenada movimiento;
+			if(Math.abs(posMetaRel.getX()) < Math.abs(posMetaRel.getY()) && posMetaRel.getX() > 0 )
+			{
+				movimiento = new Coordenada(0,(int)Math.signum(posMetaRel.getY()));
+				posMetaRel = posMetaRel.diff(movimiento);
+				return movimiento;
+			} else {
+				movimiento = new Coordenada((int)Math.signum(posMetaRel.getX()),0);
+				posMetaRel = posMetaRel.diff(movimiento);
+				return movimiento;
+			}
+		}
 }

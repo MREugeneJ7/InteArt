@@ -45,4 +45,8 @@ public class Coordenada {
 	public Coordenada diff(Coordenada x) {
 		return new Coordenada(this.x - x.getX(),this.y - x.getY());
 	}
+	public void add(Coordenada dir) {
+		this.x += dir.getX();
+		this.y += dir.getY();
+	}
 }

@@ -158,7 +158,8 @@ public class Entorno {
 			System.out.println("2. Constructor manual");
 			System.out.println("3. Constructor por fichero");
 			System.out.println("4. Elegir porcentaje de obstaculos aleatorios");
-			System.out.println("5. Salir");
+			System.out.println("5. Resolver");
+			System.out.println("6. Salir");
 			try {
 
 				System.out.println("Escribe una de las opciones");
@@ -231,10 +232,13 @@ public class Entorno {
 					prueba.setPorcentaje(x);
 					break;
 				case 5:
+					prueba.solve();
+					break;
+				case 6:
 					salir = true;
 					break;
 				default:
-					System.out.println("Solo numeros enteros entre 1 y 3");
+					System.out.println("Solo numeros enteros entre 1 y 6");
 				}
 			} catch (InputMismatchException e) {
 				System.out.println("Debes insertar un numero");
@@ -242,6 +246,34 @@ public class Entorno {
 			}
 		}
 		return prueba;
+	}
+	
+	public void solve() {
+		while(test()) {
+			step();
+			show();
+		}
+	}
+	public void step() {
+		boolean x[] = new boolean[4];
+		Coordenada temp;
+		int i = 0;
+		for(Directions d : Directions.values()) {
+			temp = new Coordenada(coche.getX(),coche.getY());
+			temp.add(d.getDir());
+			try {
+				if(matriz[temp.getX()][temp.getY()].toString() == "o") {
+					x[i] = true;
+				} else x[i] = false;
+			} catch (ArrayIndexOutOfBoundsException e) {
+				x[i] = true;
+			}
+			i++;
+		}
+		temp = new Coordenada(coche.getX(),coche.getY());
+		coche.add(((Coche)matriz[coche.getX()][coche.getY()]).move(x));
+		matriz[coche.getX()][coche.getY()] = matriz[temp.getX()][temp.getY()];
+		matriz[temp.getX()][temp.getY()] = new Miembros();
 	}
 	/**
 	 * Cambia el porcentaje de aparici�n de obstaculos del constructor aleatorio
@@ -275,7 +307,20 @@ public class Entorno {
 	 * @param miembros Nuevo objeto
 	 */
 	public void setMatrizCell(int row, int column, Miembros miembros) {
-		matriz[row][column] = miembros;	
+		matriz[row][column] = miembros;
+		findCar();
+	}
+	private void findCar() {
+		Coordenada meta = new Coordenada(0,0);
+		int coches = 0;
+		for(int i = 0; i < matriz.length;i++) for(int j = 0;j < matriz[i].length;j++) {
+			if(Character.toString(matriz[i][j].getName()).equals("c")) {
+				coche = new Coordenada(i,j);
+				coches++;
+			}
+			if(Character.toString(matriz[i][j].getName()).equals("M")) meta = new Coordenada(i,j);
+		}
+		if(coches > 0) ((Coche)matriz[this.coche.getX()][this.coche.getY()]).setPosMeta(meta.diff(coche));
 	}
 	/**
 	 * Comprueba que la matriz sea valida o que todavia no se ha llegado a la meta

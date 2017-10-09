@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -28,10 +27,11 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private JTable matriz;
 	private JTextField n,m,percent;
 	private JPanel panelContenido;
-	private JButton changePercent, createFromFile;
+	private JButton changePercent, createFromFile, solve;
 	private JLabel aviso,info;
 	private JScrollPane panelMatriz;
 	private final JFileChooser fc = new JFileChooser();
+	private boolean timerStopper = false;
 	/**
 	 * Metodo que observa las acciones realizadas en la interfaz grafica
 	 * 
@@ -59,7 +59,8 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy)) ;
 			matriz.setTableHeader(null);
 			matriz.getModel().addTableModelListener(this);
-		} else{
+		} else if(e.getSource() == solve) solve();
+		else{
 			try {
 				backEnd= new Entorno(Integer.parseInt(n.getText()),Integer.parseInt(m.getText()));
 				aviso.setVisible(false);
@@ -85,6 +86,34 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		panelContenido.revalidate();
 		pack();
 	}
+	private void solve() {
+		timerStopper = false;
+		javax.swing.Timer timer = new javax.swing.Timer(2000, new ActionListener() {
+	        
+			public void actionPerformed(ActionEvent arg0) {
+				Object[]dummy;
+				if(!backEnd.test()) timerStopper = true;
+				if(timerStopper) return;
+				backEnd.step();
+				dummy = new String[backEnd.getMatriz().length];
+				dummy = backEnd.getMatriz()[0];
+				matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy)) ;
+				matriz.setTableHeader(null);
+				for(int i = 0; i < matriz.getColumnCount();i++) {
+					matriz.getColumnModel().getColumn(i).setPreferredWidth(20);
+					matriz.getColumnModel().getColumn(i).setWidth(20);
+				}
+				panelMatriz.setPreferredSize(new Dimension ((int)matriz.getRowHeight()*backEnd.getMatriz().length, (int)matriz.getRowHeight()*backEnd.getMatriz()[0].length+3));
+				panelMatriz.setColumnHeader(null);
+				panelMatriz.revalidate();
+				panelContenido.revalidate();
+			}
+	    });
+	    timer.start();
+	    matriz.getModel().addTableModelListener(this);
+	    pack();
+	    if(timerStopper) timer.stop();
+		}
 	/**
 	 * Constructor de la ventana
 	 * @param x Entorno que se muestra en la JTable matriz
@@ -106,6 +135,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		JButton dibujar = new JButton("Crear Matriz");
 		changePercent = new JButton("%");
 		createFromFile = new JButton("Elegir Fichero");
+		solve = new JButton("Solve");
 		matriz = new JTable();
 		dibujar.addActionListener(this);
 		changePercent.addActionListener(this);
@@ -117,6 +147,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		matriz.setRowHeight(20);
 		matriz.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		createFromFile.addActionListener(this);
+		solve.addActionListener(this);
 		layout.setHorizontalGroup(
 				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup()
@@ -129,7 +160,8 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 				.addGroup(layout.createSequentialGroup()
 						.addComponent(aviso)
 						.addComponent(info)
-						.addComponent(createFromFile))
+						.addComponent(createFromFile)
+						.addComponent(solve))
 				);
 		layout.setVerticalGroup(
 				layout.createSequentialGroup()
@@ -143,7 +175,8 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(aviso)
 						.addComponent(info)
-						.addComponent(createFromFile))
+						.addComponent(createFromFile)
+						.addComponent(solve))
 				);
 		this.setContentPane(panelContenido);
 		this.setTitle("Coche Inteligente");
