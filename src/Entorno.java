@@ -12,11 +12,11 @@ import com.diogonunes.jcdp.color.api.Ansi.*;
  * Purpose: Se encarga de controlar la matriz que contiene el coche y los obstaculos.
  *
  * @author G.P.A (Grupo Putos Amos)
- * @version 0.10 8/10/2017
+ * @version 1.1.a 9/10/2017
  */
 
 public class Entorno {
-	
+
 	private static final int N_MAX = 200, M_MAX = 200;
 	private Miembros matriz[][];
 	private static int porcentaje;
@@ -91,45 +91,45 @@ public class Entorno {
 	 */
 	public Entorno(String file) throws IOException, ConstructorException{
 		BufferedReader br = new BufferedReader(new FileReader(file));
-		    String line = br.readLine();
-		    int n = Integer.parseInt(line);
-		    line = br.readLine();
-		    int m = Integer.parseInt(line);
-		    if(n <= 0 || m <= 0 || (m == 1 && n == 1) || n > N_MAX || m > M_MAX ) {
-		    	br.close();
-				throw new ConstructorException("Tamaño no valido");
+		String line = br.readLine();
+		int n = Integer.parseInt(line);
+		line = br.readLine();
+		int m = Integer.parseInt(line);
+		if(n <= 0 || m <= 0 || (m == 1 && n == 1) || n > N_MAX || m > M_MAX ) {
+			br.close();
+			throw new ConstructorException("Tamaño no valido");
+		}
+		matriz = new Miembros[n][m];
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < m; j++) {
+				switch ((char) br.read()){
+				case 'c':
+					matriz[i][j] = new Coche();
+					coche = new Coordenada(i,j);
+					break;
+				case 'M':
+					matriz[i][j] = new Meta();
+					((Coche)matriz[coche.getX()][coche.getY()]).setPosMeta(new Coordenada(i-coche.getX(),j-coche.getY()));
+					break;
+				case 'o':
+					matriz[i][j] = new Obstaculo();
+					break;
+				default:
+					matriz[i][j] = new Miembros();
+				}
 			}
-		    matriz = new Miembros[n][m];
-		    for(int i = 0; i < n; i++) {
-		    	for(int j = 0; j < m; j++) {
-		    	switch ((char) br.read()){
-		    	case 'c':
-		    		matriz[i][j] = new Coche();
-		    		coche = new Coordenada(i,j);
-		    		break;
-		    	case 'M':
-		    		matriz[i][j] = new Meta();
-		    		((Coche)matriz[coche.getX()][coche.getY()]).setPosMeta(new Coordenada(i-coche.getX(),j-coche.getY()));
-		    		break;
-		    	case 'o':
-		    		matriz[i][j] = new Obstaculo();
-		    		break;
-		    	default:
-		    		matriz[i][j] = new Miembros();
-		    	}
-		    	}
-		    	String sobras = br.readLine();
-		    	if(sobras != null && sobras.length() > 0){
-		    		br.close();
-		    		throw new ConstructorException("Fichero no completamente leido");
-		    	}
-		    }
-		    if(br.readLine() != null){
-		    	br.close();
-		    	throw new ConstructorException("Fichero no completamente leido");
-		    }
-		    br.close();
-		    if (!test()) throw new ConstructorException("coche no encontrado");
+			String sobras = br.readLine();
+			if(sobras != null && sobras.length() > 0){
+				br.close();
+				throw new ConstructorException("Fichero no completamente leido");
+			}
+		}
+		if(br.readLine() != null){
+			br.close();
+			throw new ConstructorException("Fichero no completamente leido");
+		}
+		br.close();
+		if (!test()) throw new ConstructorException("coche no encontrado");
 	}
 	/**
 	 * Imprime la matriz por consola
@@ -247,13 +247,19 @@ public class Entorno {
 		}
 		return prueba;
 	}
-	
+	/**
+	 * Resuelve el problema
+	 */
 	public void solve() {
 		while(test()) {
 			step();
 			show();
+			System.out.println();
 		}
 	}
+	/**
+	 * Hace los calculos necesarios para un �nico paso del problema
+	 */
 	public void step() {
 		boolean x[] = new boolean[4];
 		Coordenada temp;

@@ -17,7 +17,7 @@ import java.io.IOException;
  * Purpose: Clase que define la GUI.
  *
  * @author G.P.A (GUI Preciosa y Asombrosa)
- * @version 0.10 8/10/2017
+ * @version 1.1.a 9/10/2017
  */
 
 public class VentanaEntorno extends JFrame implements ActionListener, TableModelListener {
@@ -43,18 +43,18 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		else if(e.getSource() == createFromFile) {
 			int returnVal = fc.showOpenDialog(panelContenido);
 
-	        if (returnVal == JFileChooser.APPROVE_OPTION) {
-	            File file = fc.getSelectedFile();
-	            try {
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				try {
 					backEnd = new Entorno(file.getAbsolutePath());
 					aviso.setVisible(false);
 				} catch (IOException | ConstructorException | NumberFormatException e1) {
 					aviso.setVisible(true);
 				}
-	        } else {
-	            System.out.println("Open command cancelled by user.");
-	        }
-	        dummy = new String[backEnd.getMatriz().length];
+			} else {
+				System.out.println("Open command cancelled by user.");
+			}
+			dummy = new String[backEnd.getMatriz().length];
 			dummy = backEnd.getMatriz()[0];
 			matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy)) ;
 			matriz.setTableHeader(null);
@@ -86,10 +86,13 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		panelContenido.revalidate();
 		pack();
 	}
+	/**
+	 * Resuelve el problema
+	 */
 	private void solve() {
 		timerStopper = false;
 		javax.swing.Timer timer = new javax.swing.Timer(2000, new ActionListener() {
-	        
+
 			public void actionPerformed(ActionEvent arg0) {
 				Object[]dummy;
 				if(!backEnd.test()) timerStopper = true;
@@ -108,12 +111,12 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 				panelMatriz.revalidate();
 				panelContenido.revalidate();
 			}
-	    });
-	    timer.start();
-	    matriz.getModel().addTableModelListener(this);
-	    pack();
-	    if(timerStopper) timer.stop();
-		}
+		});
+		timer.start();
+		matriz.getModel().addTableModelListener(this);
+		pack();
+		if(timerStopper) timer.stop();
+	}
 	/**
 	 * Constructor de la ventana
 	 * @param x Entorno que se muestra en la JTable matriz

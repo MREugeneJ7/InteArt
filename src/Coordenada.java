@@ -4,7 +4,7 @@
  * Purpose: Clase que guarda un par de enteros para indicar la posición de los miembros de la matriz.
  *
  * @author G.P.A (Grupo Programadores Amateur)
- * @version 0.10 8/10/2017
+ * @version 1.1.a 9/10/2017
  */
 public class Coordenada {
 	private int x;
@@ -45,6 +45,10 @@ public class Coordenada {
 	public Coordenada diff(Coordenada x) {
 		return new Coordenada(this.x - x.getX(),this.y - x.getY());
 	}
+	/**
+	 * Añade a la coordenada actual los valores de otra coordenada
+	 * @param dir Coordenada que se añade
+	 */
 	public void add(Coordenada dir) {
 		this.x += dir.getX();
 		this.y += dir.getY();
