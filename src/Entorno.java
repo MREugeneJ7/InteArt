@@ -116,9 +116,16 @@ public class Entorno {
 		    		matriz[i][j] = new Miembros();
 		    	}
 		    	}
-		    	br.readLine();
+		    	String sobras = br.readLine();
+		    	if(sobras != null && sobras.length() > 0){
+		    		br.close();
+		    		throw new ConstructorException("Fichero no completamente leido");
+		    	}
 		    }
-		    if(br.read() != -1) throw new ConstructorException("Fichero no completamente leido");
+		    if(br.readLine() != null){
+		    	br.close();
+		    	throw new ConstructorException("Fichero no completamente leido");
+		    }
 		    br.close();
 		    if (!test()) throw new ConstructorException("coche no encontrado");
 	}
