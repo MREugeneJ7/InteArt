@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.*;
 import java.io.File;
@@ -28,6 +29,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private JPanel panelContenido;
 	private JButton changePercent, createFromFile;
 	private JLabel aviso,info;
+	private JScrollPane panelMatriz;
 	private final JFileChooser fc = new JFileChooser();
 	/**
 	 * Metodo que observa las acciones realizadas en la interfaz grafica
@@ -72,6 +74,9 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			matriz.getModel().addTableModelListener(this);
 		}
 		info.setText("DIM:" + backEnd.getMatriz().length + "x" + backEnd.getMatriz()[0].length + "|Porecntaje:" + backEnd.getPorcentaje());
+		panelMatriz.setPreferredSize(new Dimension ((int)matriz.getRowHeight()*backEnd.getMatriz().length, (int)matriz.getRowHeight()*backEnd.getMatriz()[0].length+3));
+		panelMatriz.setColumnHeader(null);
+		panelMatriz.revalidate();
 		panelContenido.revalidate();
 		pack();
 	}
@@ -100,6 +105,8 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		dibujar.addActionListener(this);
 		changePercent.addActionListener(this);
 		matriz.getModel().addTableModelListener(this);
+		panelMatriz = new JScrollPane(matriz);
+		panelMatriz.setColumnHeader(null);
 		createFromFile.addActionListener(this);
 		layout.setHorizontalGroup(
 				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -109,7 +116,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 						.addComponent(dibujar)
 						.addComponent(percent)
 						.addComponent(changePercent))
-				.addComponent(matriz)
+				.addComponent(panelMatriz)
 				.addGroup(layout.createSequentialGroup()
 						.addComponent(aviso)
 						.addComponent(info)
@@ -123,7 +130,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 						.addComponent(dibujar)
 						.addComponent(percent)
 						.addComponent(changePercent))
-				.addComponent(matriz)
+				.addComponent(panelMatriz)
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(aviso)
 						.addComponent(info)
@@ -134,7 +141,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocation(0, 0);
 		pack();
-		setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
+		//setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
 		this.setResizable(true);
 		this.setVisible(true);
 	}
@@ -153,6 +160,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		else backEnd.setMatrizCell(row,column,new Miembros());
 		aviso.setVisible(!backEnd.test());
 		info.setText("Manual Override");
+		panelMatriz.revalidate();
 		panelContenido.revalidate();
 		pack();
 	}
