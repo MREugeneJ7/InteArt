@@ -150,7 +150,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocation(0, 0);
 		pack();
-		//setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
 		this.setResizable(true);
 		this.setVisible(true);
 	}
