@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -74,6 +75,10 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			matriz.getModel().addTableModelListener(this);
 		}
 		info.setText("DIM:" + backEnd.getMatriz().length + "x" + backEnd.getMatriz()[0].length + "|Porecntaje:" + backEnd.getPorcentaje());
+		for(int i = 0; i < matriz.getColumnCount();i++) {
+			matriz.getColumnModel().getColumn(i).setPreferredWidth(20);
+			matriz.getColumnModel().getColumn(i).setWidth(20);
+		}
 		panelMatriz.setPreferredSize(new Dimension ((int)matriz.getRowHeight()*backEnd.getMatriz().length, (int)matriz.getRowHeight()*backEnd.getMatriz()[0].length+3));
 		panelMatriz.setColumnHeader(null);
 		panelMatriz.revalidate();
@@ -107,6 +112,10 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		matriz.getModel().addTableModelListener(this);
 		panelMatriz = new JScrollPane(matriz);
 		panelMatriz.setColumnHeader(null);
+		panelMatriz.setPreferredSize(new Dimension(0,0));
+		panelMatriz.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+		matriz.setRowHeight(20);
+		matriz.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		createFromFile.addActionListener(this);
 		layout.setHorizontalGroup(
 				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
