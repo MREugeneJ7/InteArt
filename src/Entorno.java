@@ -33,7 +33,7 @@ public class Entorno {
 	 * 
 	 * @param n Numero de filas
 	 * @param m Numero de columnas
-	 * @throws ConstructorException Cuando el tamaño de la matriz no es valido
+	 * @throws ConstructorException Cuando el tamaï¿½o de la matriz no es valido
 	 */
 	public Entorno(int n, int m) throws ConstructorException {
 		if(n <= 0 || m <= 0 || (m == 1 && n == 1) || n > N_MAX || m > M_MAX ) throw new ConstructorException("TamaÃ±o no valido");
@@ -63,7 +63,7 @@ public class Entorno {
 	 * @param coche Posicion del coche
 	 * @param meta Posicion de la meta
 	 * @param obstaculos Vector de posiciones de los obstaculos.
-	 * @throws ConstructorException Cuando el tamaño de la matriz no es valido o no hay coche
+	 * @throws ConstructorException Cuando el tamaï¿½o de la matriz no es valido o no hay coche
 	 */
 	public Entorno(int n, int m, Coordenada meta, Coordenada coche, Coordenada[] obstaculos) throws ConstructorException {
 		if(n <= 0 || m <= 0 || (m == 1 && n == 1) || n > N_MAX || m > M_MAX ) throw new ConstructorException("TamaÃ±o no valido");
@@ -118,6 +118,7 @@ public class Entorno {
 		    	}
 		    	br.readLine();
 		    }
+		    if(br.read() != -1) throw new ConstructorException("Fichero no completamente leido");
 		    br.close();
 		    if (!test()) throw new ConstructorException("coche no encontrado");
 	}
@@ -135,7 +136,7 @@ public class Entorno {
 		}
 	}
 	/**
-	 * Genera el menú que permite crear la matriz por consola de forma aleatoria y manual, además de cambiar el porcentaje de aparición de obstaculos.
+	 * Genera el menï¿½ que permite crear la matriz por consola de forma aleatoria y manual, ademï¿½s de cambiar el porcentaje de apariciï¿½n de obstaculos.
 	 */
 	public static Entorno menu() {
 		boolean salir = false;
@@ -209,8 +210,8 @@ public class Entorno {
 					try {
 						prueba = new Entorno(temp);
 						prueba.show();
-					} catch (IOException e) {
-						System.out.println("Fichero no encontrado");
+					} catch (IOException | NumberFormatException e) {
+						System.out.println("Fichero no encontrado o corrupto");
 					} catch (ConstructorException e) {
 						System.out.println(e.getMessage());
 					}
@@ -234,9 +235,9 @@ public class Entorno {
 		return prueba;
 	}
 	/**
-	 * Cambia el porcentaje de aparición de obstaculos del constructor aleatorio
+	 * Cambia el porcentaje de apariciï¿½n de obstaculos del constructor aleatorio
 	 * 
-	 * @param p valor del porcentaje de aparición de obstaculos.
+	 * @param p valor del porcentaje de apariciï¿½n de obstaculos.
 	 */
 	public void setPorcentaje(int p) {
 		porcentaje = p;
@@ -270,7 +271,7 @@ public class Entorno {
 	/**
 	 * Comprueba que la matriz sea valida o que todavia no se ha llegado a la meta
 	 * 
-	 * @return Si hay únicamente 1 coche y 1 meta
+	 * @return Si hay ï¿½nicamente 1 coche y 1 meta
 	 */
 	public boolean test() {
 		int coches = 0,metas = 0;

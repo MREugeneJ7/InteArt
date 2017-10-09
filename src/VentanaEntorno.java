@@ -45,7 +45,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	            try {
 					backEnd = new Entorno(file.getAbsolutePath());
 					aviso.setVisible(false);
-				} catch (IOException | ConstructorException e1) {
+				} catch (IOException | ConstructorException | NumberFormatException e1) {
 					aviso.setVisible(true);
 				}
 	        } else {
