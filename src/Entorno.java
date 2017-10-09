@@ -105,9 +105,11 @@ public class Entorno {
 		    	switch ((char) br.read()){
 		    	case 'c':
 		    		matriz[i][j] = new Coche();
+		    		coche = new Coordenada(i,j);
 		    		break;
 		    	case 'M':
 		    		matriz[i][j] = new Meta();
+		    		((Coche)matriz[coche.getX()][coche.getY()]).setPosMeta(new Coordenada(i-coche.getX(),j-coche.getY()));
 		    		break;
 		    	case 'o':
 		    		matriz[i][j] = new Obstaculo();
