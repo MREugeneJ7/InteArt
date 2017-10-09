@@ -4,7 +4,7 @@
  * Purpose: Clase que define excepciones originadas en el constructor del entorno.
  *
  * @author G.P.A (Gara es una Profesora Asombrosa)
- * @version 0.9 8/10/2017
+ * @version 0.10 8/10/2017
  */
 public class ConstructorException extends Exception {
 

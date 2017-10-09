@@ -7,6 +7,8 @@ import javax.swing.table.TableModel;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * IA Pract1
@@ -14,7 +16,7 @@ import java.awt.event.*;
  * Purpose: Clase que define la GUI.
  *
  * @author G.P.A (GUI Preciosa y Asombrosa)
- * @version 0.9 8/10/2017
+ * @version 0.10 8/10/2017
  */
 
 public class VentanaEntorno extends JFrame implements ActionListener, TableModelListener {
@@ -24,8 +26,9 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private JTable matriz;
 	private JTextField n,m,percent;
 	private JPanel panelContenido;
-	private JButton changePercent;
+	private JButton changePercent, createFromFile;
 	private JLabel aviso,info;
+	private final JFileChooser fc = new JFileChooser();
 	/**
 	 * Metodo que observa las acciones realizadas en la interfaz grafica
 	 * 
@@ -33,8 +36,27 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	 */
 	public void actionPerformed(ActionEvent e) {
 		Object[]dummy;
-		if(e.getSource()==changePercent) backEnd.setPorcentaje(Integer.parseInt(percent.getText()));
-		else {
+		if(e.getSource() == changePercent) backEnd.setPorcentaje(Integer.parseInt(percent.getText()));
+		else if(e.getSource() == createFromFile) {
+			int returnVal = fc.showOpenDialog(panelContenido);
+
+	        if (returnVal == JFileChooser.APPROVE_OPTION) {
+	            File file = fc.getSelectedFile();
+	            try {
+					backEnd = new Entorno(file.getAbsolutePath());
+					aviso.setVisible(false);
+				} catch (IOException | ConstructorException e1) {
+					aviso.setVisible(true);
+				}
+	        } else {
+	            System.out.println("Open command cancelled by user.");
+	        }
+	        dummy = new String[backEnd.getMatriz().length];
+			dummy = backEnd.getMatriz()[0];
+			matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy)) ;
+			matriz.setTableHeader(null);
+			matriz.getModel().addTableModelListener(this);
+		} else{
 			try {
 				backEnd= new Entorno(Integer.parseInt(n.getText()),Integer.parseInt(m.getText()));
 				aviso.setVisible(false);
@@ -73,10 +95,12 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		percent = new JTextField(Integer.toString(backEnd.getPorcentaje()));
 		JButton dibujar = new JButton("Crear Matriz");
 		changePercent = new JButton("%");
+		createFromFile = new JButton("Elegir Fichero");
 		matriz = new JTable();
 		dibujar.addActionListener(this);
 		changePercent.addActionListener(this);
 		matriz.getModel().addTableModelListener(this);
+		createFromFile.addActionListener(this);
 		layout.setHorizontalGroup(
 				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup()
@@ -88,7 +112,8 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 				.addComponent(matriz)
 				.addGroup(layout.createSequentialGroup()
 						.addComponent(aviso)
-						.addComponent(info))
+						.addComponent(info)
+						.addComponent(createFromFile))
 				);
 		layout.setVerticalGroup(
 				layout.createSequentialGroup()
@@ -101,7 +126,8 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 				.addComponent(matriz)
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(aviso)
-						.addComponent(info))
+						.addComponent(info)
+						.addComponent(createFromFile))
 				);
 		this.setContentPane(panelContenido);
 		this.setTitle("Coche Inteligente");
