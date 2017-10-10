@@ -1,7 +1,7 @@
 /**
  * IA Pract1
  * Coordenada.java
- * Purpose: Clase que guarda un par de enteros para indicar la posición de los miembros de la matriz.
+ * Purpose: Clase que guarda un par de enteros para indicar la posiciï¿½n de los miembros de la matriz.
  *
  * @author G.P.A (Grupo Programadores Amateur)
  * @version 1.1.a 9/10/2017
@@ -19,6 +19,14 @@ public class Coordenada {
 		this.x = x;
 		this.y = y;
 	}
+	/**
+	 * Contructor copia
+	 * @param cpy coordenada a copiar
+	 */
+	public Coordenada(Coordenada cpy){
+		this.x = cpy.getX();
+		this.y = cpy.getY();
+	}
 	/** Devuelve la x. */
 	public int getX () {
 		return x;
@@ -30,7 +38,7 @@ public class Coordenada {
 	/**
 	 * Metodo que dictamina si dos coordenadas son iguales
 	 * 
-	 * @param posicion Coordenada que se somete a comparación
+	 * @param posicion Coordenada que se somete a comparaciï¿½n
 	 * @return Si ambas coordenadas son iguales
 	 */
 	public boolean equals (Coordenada posicion) {
@@ -46,8 +54,8 @@ public class Coordenada {
 		return new Coordenada(this.x - x.getX(),this.y - x.getY());
 	}
 	/**
-	 * Añade a la coordenada actual los valores de otra coordenada
-	 * @param dir Coordenada que se añade
+	 * Aï¿½ade a la coordenada actual los valores de otra coordenada
+	 * @param dir Coordenada que se aï¿½ade
 	 */
 	public void add(Coordenada dir) {
 		this.x += dir.getX();

@@ -17,6 +17,23 @@ public class Coche extends Miembros {
 		name = 'c';
 	}
 	/**
+	 * Constructor copia
+	 * @param cpy coche a copiar
+	 */
+	public Coche(Coche cpy){
+		this.name = cpy.getName();
+		this.posMetaRel = cpy.getPosMetaRel();
+		this.sensores = cpy.getSensores();
+	}
+	/** Devuelve los sensores*/
+	private boolean[] getSensores() {
+		return sensores;
+	}
+	/** Devuelve la posicion de la meta*/
+	private Coordenada getPosMetaRel() {
+		return posMetaRel;
+	}
+	/**
 	 * Asigna un valor a la variable que define la posicion de la meta
 	 * @param meta
 	 */
@@ -31,7 +48,9 @@ public class Coche extends Miembros {
 	public Coordenada move(boolean[] collisions){
 		Coordenada movimiento;
 		sensores = collisions;
-		if(Math.abs(posMetaRel.getX()) < Math.abs(posMetaRel.getY()) && posMetaRel.getX() > 0 )
+		if((Math.abs(posMetaRel.getX()) > Math.abs(posMetaRel.getY()) 
+				&& posMetaRel.getY() > 0) 
+				|| posMetaRel.getX() == 0)
 		{
 			movimiento = new Coordenada(0,(int)Math.signum(posMetaRel.getY()));
 			posMetaRel = posMetaRel.diff(movimiento);

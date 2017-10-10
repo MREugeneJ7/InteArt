@@ -32,6 +32,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private JScrollPane panelMatriz;
 	private final JFileChooser fc = new JFileChooser();
 	private boolean timerStopper = false;
+	private javax.swing.Timer timer = new javax.swing.Timer(2000, this); 
 	/**
 	 * Metodo que observa las acciones realizadas en la interfaz grafica
 	 * 
@@ -59,8 +60,26 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy)) ;
 			matriz.setTableHeader(null);
 			matriz.getModel().addTableModelListener(this);
-		} else if(e.getSource() == solve) solve();
-		else{
+		} else if(e.getSource() == solve) {
+			solve();
+		} else if(e.getSource() == timer){
+			if(!backEnd.test()) timerStopper = true;
+			if(timerStopper) return;
+			backEnd.step();
+			dummy = new String[backEnd.getMatriz().length];
+			dummy = backEnd.getMatriz()[0];
+			matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy)) ;
+			matriz.setTableHeader(null);
+			matriz.getModel().addTableModelListener(this);
+			for(int i = 0; i < matriz.getColumnCount();i++) {
+				matriz.getColumnModel().getColumn(i).setPreferredWidth(20);
+				matriz.getColumnModel().getColumn(i).setWidth(20);
+			}
+			panelMatriz.setPreferredSize(new Dimension ((int)matriz.getRowHeight()*backEnd.getMatriz().length, (int)matriz.getRowHeight()*backEnd.getMatriz()[0].length+3));
+			panelMatriz.setColumnHeader(null);
+			panelMatriz.revalidate();
+			panelContenido.revalidate();
+		} else{
 			try {
 				backEnd= new Entorno(Integer.parseInt(n.getText()),Integer.parseInt(m.getText()));
 				aviso.setVisible(false);
@@ -82,6 +101,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		}
 		panelMatriz.setPreferredSize(new Dimension ((int)matriz.getRowHeight()*backEnd.getMatriz().length, (int)matriz.getRowHeight()*backEnd.getMatriz()[0].length+3));
 		panelMatriz.setColumnHeader(null);
+		if(timerStopper) timer.stop();
 		panelMatriz.revalidate();
 		panelContenido.revalidate();
 		pack();
@@ -91,31 +111,8 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	 */
 	private void solve() {
 		timerStopper = false;
-		javax.swing.Timer timer = new javax.swing.Timer(2000, new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				Object[]dummy;
-				if(!backEnd.test()) timerStopper = true;
-				if(timerStopper) return;
-				backEnd.step();
-				dummy = new String[backEnd.getMatriz().length];
-				dummy = backEnd.getMatriz()[0];
-				matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy)) ;
-				matriz.setTableHeader(null);
-				for(int i = 0; i < matriz.getColumnCount();i++) {
-					matriz.getColumnModel().getColumn(i).setPreferredWidth(20);
-					matriz.getColumnModel().getColumn(i).setWidth(20);
-				}
-				panelMatriz.setPreferredSize(new Dimension ((int)matriz.getRowHeight()*backEnd.getMatriz().length, (int)matriz.getRowHeight()*backEnd.getMatriz()[0].length+3));
-				panelMatriz.setColumnHeader(null);
-				panelMatriz.revalidate();
-				panelContenido.revalidate();
-			}
-		});
 		timer.start();
-		matriz.getModel().addTableModelListener(this);
-		pack();
-		if(timerStopper) timer.stop();
+		pack();	
 	}
 	/**
 	 * Constructor de la ventana

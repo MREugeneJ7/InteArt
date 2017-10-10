@@ -13,6 +13,9 @@ public class Miembros {
 	public Miembros() {
 		name = '.';
 	}
+	public Miembros(char c) {
+		name = c;
+	}
 	/** Devuelve el nombre del miembro*/
 	public char getName() {
 		return name;

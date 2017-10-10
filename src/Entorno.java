@@ -90,6 +90,7 @@ public class Entorno {
 	 * @throws ConstructorException 
 	 */
 	public Entorno(String file) throws IOException, ConstructorException{
+		Coordenada meta = new Coordenada(0,0);
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		String line = br.readLine();
 		int n = Integer.parseInt(line);
@@ -109,7 +110,7 @@ public class Entorno {
 					break;
 				case 'M':
 					matriz[i][j] = new Meta();
-					((Coche)matriz[coche.getX()][coche.getY()]).setPosMeta(new Coordenada(i-coche.getX(),j-coche.getY()));
+					meta = new Coordenada(i,j);
 					break;
 				case 'o':
 					matriz[i][j] = new Obstaculo();
@@ -129,6 +130,7 @@ public class Entorno {
 			throw new ConstructorException("Fichero no completamente leido");
 		}
 		br.close();
+		((Coche)matriz[coche.getX()][coche.getY()]).setPosMeta(meta.diff(coche));
 		if (!test()) throw new ConstructorException("coche no encontrado");
 	}
 	/**
@@ -139,6 +141,9 @@ public class Entorno {
 		for(int i = 0; i < matriz.length; i++) { 
 			for(int j = 0; j < matriz[i].length;j++) if(matriz[i][j] != null) if(matriz[i][j].getName() == 'c' || matriz[i][j].getName() == 'M') {
 				cp.print(matriz[i][j].getName(), Attribute.BOLD, FColor.GREEN, BColor.NONE);
+				cp.clear();
+			} else if(matriz[i][j].getName() == 'x' ){
+				cp.print(matriz[i][j].getName(), Attribute.BOLD, FColor.RED, BColor.NONE);
 				cp.clear();
 			} else System.out.print(matriz[i][j].getName());
 			System.out.println();
@@ -258,7 +263,7 @@ public class Entorno {
 		}
 	}
 	/**
-	 * Hace los calculos necesarios para un único paso del problema
+	 * Hace los calculos necesarios para un ï¿½nico paso del problema
 	 */
 	public void step() {
 		boolean x[] = new boolean[4];
@@ -279,7 +284,7 @@ public class Entorno {
 		temp = new Coordenada(coche.getX(),coche.getY());
 		coche.add(((Coche)matriz[coche.getX()][coche.getY()]).move(x));
 		matriz[coche.getX()][coche.getY()] = matriz[temp.getX()][temp.getY()];
-		matriz[temp.getX()][temp.getY()] = new Miembros();
+		matriz[temp.getX()][temp.getY()] = new Miembros('x');
 	}
 	/**
 	 * Cambia el porcentaje de apariciï¿½n de obstaculos del constructor aleatorio
@@ -316,6 +321,9 @@ public class Entorno {
 		matriz[row][column] = miembros;
 		findCar();
 	}
+	/**
+	 * Da las coordenadas del coche.
+	 */
 	private void findCar() {
 		Coordenada meta = new Coordenada(0,0);
 		int coches = 0;
