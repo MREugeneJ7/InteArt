@@ -12,7 +12,7 @@ import com.diogonunes.jcdp.color.api.Ansi.*;
  * Purpose: Se encarga de controlar la matriz que contiene el coche y los obstaculos.
  *
  * @author G.P.A (Grupo Putos Amos)
- * @version 1.1.a 9/10/2017
+ * @version 1.1.c 10/10/2017
  */
 
 public class Entorno {

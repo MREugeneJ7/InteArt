@@ -4,7 +4,7 @@
  * Purpose: Clase que define un miembro cualquiera de la matriz.
  *
  * @author G.P.A (Grupo Problematico y Alborotador)
- * @version 1.1.a 9/10/2017
+ * @version 1.1.c 10/10/2017
  */
 public class Miembros {
 
@@ -13,6 +13,7 @@ public class Miembros {
 	public Miembros() {
 		name = '.';
 	}
+	/** Constructor de la clase miembros con nombre personalizado*/
 	public Miembros(char c) {
 		name = c;
 	}

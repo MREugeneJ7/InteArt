@@ -4,7 +4,7 @@
  * Purpose: Clase que guarda un par de enteros para indicar la posici�n de los miembros de la matriz.
  *
  * @author G.P.A (Grupo Programadores Amateur)
- * @version 1.1.a 9/10/2017
+ * @version 1.1.c 10/10/2017
  */
 public class Coordenada {
 	private int x;

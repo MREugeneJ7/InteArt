@@ -17,7 +17,7 @@ import java.io.IOException;
  * Purpose: Clase que define la GUI.
  *
  * @author G.P.A (GUI Preciosa y Asombrosa)
- * @version 1.1.a 9/10/2017
+ * @version 1.1.c 10/10/2017
  */
 
 public class VentanaEntorno extends JFrame implements ActionListener, TableModelListener {
