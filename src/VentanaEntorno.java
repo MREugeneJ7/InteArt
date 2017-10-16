@@ -32,7 +32,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private JScrollPane panelMatriz;
 	private final JFileChooser fc = new JFileChooser();
 	private boolean timerStopper = false;
-	private javax.swing.Timer timer = new javax.swing.Timer(2000, this); 
+	private javax.swing.Timer timer = new javax.swing.Timer(200, this); 
 	/**
 	 * Metodo que observa las acciones realizadas en la interfaz grafica
 	 * 
@@ -65,7 +65,12 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		} else if(e.getSource() == timer){
 			if(!backEnd.test()) timerStopper = true;
 			if(timerStopper) return;
-			backEnd.step();
+			try {
+				backEnd.step();
+			} catch (BadMatrixException e1) {
+				aviso.setVisible(true);
+				timerStopper = true;
+			}
 			dummy = new String[backEnd.getMatriz().length];
 			dummy = backEnd.getMatriz()[0];
 			matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy)) ;
@@ -111,6 +116,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	 */
 	private void solve() {
 		timerStopper = false;
+		backEnd.restartLists();
 		timer.start();
 		pack();	
 	}

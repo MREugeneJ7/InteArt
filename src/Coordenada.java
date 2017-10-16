@@ -69,4 +69,8 @@ public class Coordenada {
 		this.x += dir.getX();
 		this.y += dir.getY();
 	}
+	public boolean equals (Object posicion) {
+		if ((this.x == ((Coordenada)posicion).getX()) && (this.y == ((Coordenada)posicion).getY())) return true;
+		else return false;
+	}
 }
