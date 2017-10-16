@@ -45,10 +45,38 @@ public class Coche extends Miembros {
 	 * @param collisions Datos para los sensores
 	 * @return Coordenada con el siguiente movimiento del coche
 	 */
-	public Coordenada move(boolean[] collisions){
-		Coordenada movimiento;
-		sensores = collisions;
-		if((Math.abs(posMetaRel.getX()) > Math.abs(posMetaRel.getY()) 
+	public Coordenada[] move(boolean[] collisions){
+		Coordenada movimiento[];
+		Coordenada dummy[];
+		dummy = new Coordenada[4];
+		int size = 0;
+		sensores = collisions;		
+		for (int i = 0; i < sensores.length; i++) {
+			if (!sensores[i]) {
+				switch (i) {
+					case 0: 
+						dummy[size] = Directions.NORTH.getDir();
+						break;
+					case 1:
+						dummy[size] = Directions.SOUTH.getDir();
+						break;
+					case 2:
+						dummy[size] = Directions.EAST.getDir();
+						break;
+					case 3:
+						dummy[size] = Directions.WEST.getDir();
+						break;
+					
+				}
+				size++;
+			}
+		}
+		movimiento = new Coordenada [size];
+		for (int i = 0; i < size; i++) movimiento[i] = dummy[i];
+		
+		return movimiento;
+		
+		/*if((Math.abs(posMetaRel.getX()) > Math.abs(posMetaRel.getY()) 
 				&& posMetaRel.getY() > 0) 
 				|| posMetaRel.getX() == 0)
 		{
@@ -59,6 +87,6 @@ public class Coche extends Miembros {
 			movimiento = new Coordenada((int)Math.signum(posMetaRel.getX()),0);
 			posMetaRel = posMetaRel.diff(movimiento);
 			return movimiento;
-		}
+		}*/
 	}
 }
