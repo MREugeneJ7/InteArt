@@ -24,6 +24,6 @@ public class Meta extends Miembros implements Comparator<Coordenada> {
 	public int compare(Coordenada o1, Coordenada o2) {
 		o1 = o1.diff(miPos);
 		o2 = o2.diff(miPos);		
-		return (Math.abs(o1.getX())+Math.abs(o1.getY()))-(Math.abs(o2.getX())+Math.abs(o2.getY()));
+		return (Math.abs(o1.getX()) + Math.abs(o1.getY())) - (Math.abs(o2.getX()) + Math.abs(o2.getY()));
 	}
 }
