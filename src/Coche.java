@@ -75,18 +75,5 @@ public class Coche extends Miembros {
 		for (int i = 0; i < size; i++) movimiento[i] = dummy[i];
 		
 		return movimiento;
-		
-		/*if((Math.abs(posMetaRel.getX()) > Math.abs(posMetaRel.getY()) 
-				&& posMetaRel.getY() > 0) 
-				|| posMetaRel.getX() == 0)
-		{
-			movimiento = new Coordenada(0,(int)Math.signum(posMetaRel.getY()));
-			posMetaRel = posMetaRel.diff(movimiento);
-			return movimiento;
-		} else {
-			movimiento = new Coordenada((int)Math.signum(posMetaRel.getX()),0);
-			posMetaRel = posMetaRel.diff(movimiento);
-			return movimiento;
-		}*/
 	}
 }
