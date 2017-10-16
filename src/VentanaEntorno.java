@@ -197,7 +197,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		TableModel model = (TableModel)e.getSource();
 		Object data = model.getValueAt(row, column);
 		if("c".equals(data)) backEnd.setMatrizCell(row,column,new Coche());
-		else if("M".equals(data)) backEnd.setMatrizCell(row,column,new Meta());
+		else if("M".equals(data)) backEnd.setMatrizCell(row,column,new Meta(new Coordenada (row,column)));
 		else if("o".equals(data)) backEnd.setMatrizCell(row,column,new Obstaculo());
 		else backEnd.setMatrizCell(row,column,new Miembros());
 		aviso.setVisible(!backEnd.test());

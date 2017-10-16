@@ -21,7 +21,9 @@ public class Entorno {
 	private Miembros matriz[][];
 	private static int porcentaje;
 	private static Scanner in;
-	private Coordenada coche;
+	private Coordenada coche,meta;
+	private List<Coordenada> visitados, caminoFinal;
+	private List<Coordenada> mejor = new ArrayList<Coordenada>();
 
 	public Entorno() {
 		matriz = new Miembros[1][1];
@@ -49,11 +51,12 @@ public class Entorno {
 			nTemp = (int)(Math.random() * n);
 			mTemp = (int)(Math.random() * m);
 			if(matriz[nTemp][mTemp].getName() != 'c') {
-				matriz[nTemp][mTemp] = new Meta();
+				meta = new Coordenada(nTemp,mTemp);
+				matriz[nTemp][mTemp] = new Meta(meta);
 				hayMeta = true;
 			}
 		}
-		((Coche)matriz[coche.getX()][coche.getY()]).setPosMeta(new Coordenada(nTemp-coche.getX(),mTemp-coche.getY()));
+		((Coche)matriz[this.coche.getX()][this.coche.getY()]).setPosMeta(meta.diff(coche));
 	}
 	/**
 	 * Constructor manual del entorno
@@ -71,8 +74,9 @@ public class Entorno {
 		matriz = new Miembros[n][m];
 		for(int i = 0;i < n;i++) for (int j = 0; j < m;j++) matriz[i][j] = new Miembros();
 		this.coche = coche;
+		this.meta = meta;
 		if(meta.equals(coche)) throw new ConstructorException("Coche no existente");
-		matriz[meta.getX()][meta.getY()] = new Meta();
+		matriz[meta.getX()][meta.getY()] = new Meta(meta);
 		matriz[coche.getX()][coche.getY()] = new Coche();
 		((Coche)matriz[this.coche.getX()][this.coche.getY()]).setPosMeta(meta.diff(coche));
 		for(int i = 0; i < obstaculos.length; i++) if(obstaculos[i].equals(coche) || obstaculos[i].equals(meta)) fail = true;
@@ -90,7 +94,6 @@ public class Entorno {
 	 * @throws ConstructorException 
 	 */
 	public Entorno(String file) throws IOException, ConstructorException{
-		Coordenada meta = new Coordenada(0,0);
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		String line = br.readLine();
 		int n = Integer.parseInt(line);
@@ -109,8 +112,8 @@ public class Entorno {
 					coche = new Coordenada(i,j);
 					break;
 				case 'M':
-					matriz[i][j] = new Meta();
 					meta = new Coordenada(i,j);
+					matriz[i][j] = new Meta(meta);
 					break;
 				case 'o':
 					matriz[i][j] = new Obstaculo();
@@ -267,13 +270,13 @@ public class Entorno {
 	 */
 	public void step() {
 		boolean x[] = new boolean[4];
-		Coordenada temp;
+		Coordenada temp, possibleDirs[];
 		int i = 0;
 		for(Directions d : Directions.values()) {
 			temp = new Coordenada(coche.getX(),coche.getY());
 			temp.add(d.getDir());
 			try {
-				if(matriz[temp.getX()][temp.getY()].toString() == "o") {
+				if(matriz[temp.getX()][temp.getY()].toString().equals("o")) {
 					x[i] = true;
 				} else x[i] = false;
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -282,9 +285,16 @@ public class Entorno {
 			i++;
 		}
 		temp = new Coordenada(coche.getX(),coche.getY());
-		coche.add(((Coche)matriz[coche.getX()][coche.getY()]).move(x));
+		possibleDirs = ((Coche)matriz[coche.getX()][coche.getY()]).move(x);
+		System.out.println(possibleDirs.length);
+		for(int j = 0; j < possibleDirs.length; j++) {
+			System.out.println(possibleDirs[j].getX()+" "+possibleDirs[j].getY());
+			mejor.add(coche.sum(possibleDirs[j]));
+		}
+		Collections.sort(mejor,((Meta)matriz[meta.getX()][meta.getY()]));
+		coche = mejor.get(0);
 		matriz[coche.getX()][coche.getY()] = matriz[temp.getX()][temp.getY()];
-		matriz[temp.getX()][temp.getY()] = new Miembros('x');
+		matriz[temp.getX()][temp.getY()] = new Miembros('X');
 	}
 	/**
 	 * Cambia el porcentaje de aparici�n de obstaculos del constructor aleatorio

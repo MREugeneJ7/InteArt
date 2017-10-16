@@ -54,6 +54,14 @@ public class Coordenada {
 		return new Coordenada(this.x - x.getX(),this.y - x.getY());
 	}
 	/**
+	 * Metodo que devuelve la coordenada resultante de sumar dos coordenadas
+	 * @param x Coordenada que se suma
+	 * @return Diferencia
+	 */
+	public Coordenada sum(Coordenada x){
+		return new Coordenada(this.x + x.getX(),this.y + x.getY());
+	}
+	/**
 	 * A�ade a la coordenada actual los valores de otra coordenada
 	 * @param dir Coordenada que se a�ade
 	 */
