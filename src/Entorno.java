@@ -325,17 +325,17 @@ public class Entorno {
 		}
 		mejor.sort(((Meta)matriz[meta.getX()][meta.getY()]));
 		while(visitados.contains(mejor.get(0))){
-			for(int w = visitados.lastIndexOf(mejor.get(0))+1; w < visitados.size(); w++)
+			mejor.remove(0);
+			for(int w = visitados.indexOf(mejor.get(0)); w > 0; w--)
 				//aqui es donde falla
 				if(caminoFinal.contains(visitados.get(w))) caminoFinal.remove(visitados.get(w));
-			mejor.remove(0);
 			if(mejor.isEmpty()) throw new BadMatrixException("No existen caminos validos");
 		}
 		coche = mejor.get(0);
 		visitados.add(mejor.get(0));
 		caminoFinal.add(mejor.get(0));
 		matriz[coche.getX()][coche.getY()] = matriz[temp.getX()][temp.getY()];
-		matriz[temp.getX()][temp.getY()] = new Miembros('.');
+		matriz[temp.getX()][temp.getY()] = new Miembros('x');
 	}
 	/**
 	 * Cambia el porcentaje de aparici�n de obstaculos del constructor aleatorio
@@ -371,6 +371,12 @@ public class Entorno {
 	public void setMatrizCell(int row, int column, Miembros miembros) {
 		matriz[row][column] = miembros;
 		findCar();
+		findMeta();
+	}
+	private void findMeta() {
+		for(int i = 0; i < matriz.length;i++) for(int j = 0;j < matriz[i].length;j++) {
+			if(Character.toString(matriz[i][j].getName()).equals("M")) meta = new Coordenada(i,j);
+		}
 	}
 	/**
 	 * Da las coordenadas del coche.
