@@ -32,6 +32,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private JScrollPane panelMatriz;
 	private final JFileChooser fc = new JFileChooser();
 	private boolean timerStopper = false;
+	private int j = 0;
 	private javax.swing.Timer timer = new javax.swing.Timer(200, this); 
 	/**
 	 * Metodo que observa las acciones realizadas en la interfaz grafica
@@ -61,16 +62,15 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			matriz.setTableHeader(null);
 			matriz.getModel().addTableModelListener(this);
 		} else if(e.getSource() == solve) {
-			solve();
+			if(backEnd.test()) {
+				solve();
+				j = 0;
+			} else aviso.setVisible(true);
 		} else if(e.getSource() == timer){
-			if(!backEnd.test()) timerStopper = true;
 			if(timerStopper) return;
-			try {
-				backEnd.step();
-			} catch (BadMatrixException e1) {
-				aviso.setVisible(true);
-				timerStopper = true;
-			}
+			backEnd.showOptimalStep(j);
+			j++;
+			if(!backEnd.test() && j != 0) timerStopper = true;
 			dummy = new String[backEnd.getMatriz().length];
 			dummy = backEnd.getMatriz()[0];
 			matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy)) ;
@@ -117,7 +117,15 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private void solve() {
 		timerStopper = false;
 		backEnd.restartLists();
-		timer.start();
+		try {
+			backEnd.solve();
+		} catch (BadMatrixException e) {
+			aviso.setVisible(true);
+			timerStopper = true;
+		} finally {
+			timer.start();
+		}
+		
 		pack();	
 	}
 	/**

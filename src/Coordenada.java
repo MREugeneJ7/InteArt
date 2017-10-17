@@ -73,4 +73,7 @@ public class Coordenada {
 		if ((this.x == ((Coordenada)posicion).getX()) && (this.y == ((Coordenada)posicion).getY())) return true;
 		else return false;
 	}
+	public int dist(Coordenada coordenada) {
+		return Math.abs(this.x - coordenada.getX()) + Math.abs(this.y - coordenada.getY());
+	}
 }

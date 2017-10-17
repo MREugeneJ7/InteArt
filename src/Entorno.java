@@ -241,8 +241,13 @@ public class Entorno {
 					prueba.setPorcentaje(x);
 					break;
 				case 5:
-					prueba.solve();
-					prueba.showSolution();
+					try {
+						prueba.solve();
+						prueba.showSolution();
+					} catch (BadMatrixException e) {
+						System.out.println(e.getMessage());
+					}
+					
 					break;
 				case 6:
 					salir = true;
@@ -269,7 +274,7 @@ public class Entorno {
 			temp = new Coordenada(coche.getX(),coche.getY());
 			coche = caminoFinal.get(i);
 			matriz[coche.getX()][coche.getY()] = matriz[temp.getX()][temp.getY()];
-			matriz[temp.getX()][temp.getY()] = new Miembros('X');
+			matriz[temp.getX()][temp.getY()] = new Miembros('F');
 			System.out.println("Paso "+i);
 			show();
 			System.out.println("*********************");
@@ -277,16 +282,12 @@ public class Entorno {
 	}
 	/**
 	 * Resuelve el problema
+	 * @throws BadMatrixException 
 	 */
-	public void solve() {
+	public void solve() throws BadMatrixException {
 		restartLists();
 		while(test()) {
-			try {
-				step();
-			} catch (BadMatrixException e) {
-				System.out.println(e.getMessage());
-				break;
-			}
+			step();
 			Object[] st = caminoFinal.toArray();
 		    for (Object s : st) {
 		    	if (caminoFinal.indexOf(s) != caminoFinal.lastIndexOf(s)) {
@@ -294,6 +295,20 @@ public class Entorno {
 		    	}
 		    }
 		}
+		int tempSize;
+		for(int i = caminoFinal.size()-1; i > 0; i--) {
+			List<Coordenada> aux = caminoFinal.subList(i, caminoFinal.size());
+			for(int j = 0; j < i; j++) {
+				 tempSize = caminoFinal.size();
+				 if(caminoFinal.get(j).dist(caminoFinal.get(i)) == 1) {
+					 caminoFinal = caminoFinal.subList(0,j+1);
+					 caminoFinal.addAll(aux);
+					 tempSize -= caminoFinal.size();
+					 i -= tempSize; 
+		    	}
+		    }
+	    }
+		
 	}
 	/**
 	 * Hace los calculos necesarios para un �nico paso del problema
@@ -303,7 +318,7 @@ public class Entorno {
 		mejor.add(coche);
 		visitados.add(coche);
 		caminoFinal.add(coche);
-		boolean x[] = new boolean[4];
+		boolean x[] = new boolean[4], thrower = false;
 		Coordenada temp, possibleDirs[];
 		int i = 0;
 		for(Directions d : Directions.values()) {
@@ -326,16 +341,20 @@ public class Entorno {
 		mejor.sort(((Meta)matriz[meta.getX()][meta.getY()]));
 		while(visitados.contains(mejor.get(0))){
 			mejor.remove(0);
-			for(int w = visitados.indexOf(mejor.get(0)); w > 0; w--)
-				//aqui es donde falla
-				if(caminoFinal.contains(visitados.get(w))) caminoFinal.remove(visitados.get(w));
-			if(mejor.isEmpty()) throw new BadMatrixException("No existen caminos validos");
+			if(mejor.isEmpty()) { 
+				matriz[coche.getX()][coche.getY()] = new Miembros();
+				coche = caminoFinal.get(0);
+				matriz[coche.getX()][coche.getY()] = new Coche();
+				((Coche)matriz[coche.getX()][coche.getY()]).setPosMeta(meta.diff(coche));
+				thrower = true;
+			}
+			if(thrower) throw new BadMatrixException("No existen caminos validos");
 		}
 		coche = mejor.get(0);
 		visitados.add(mejor.get(0));
 		caminoFinal.add(mejor.get(0));
 		matriz[coche.getX()][coche.getY()] = matriz[temp.getX()][temp.getY()];
-		matriz[temp.getX()][temp.getY()] = new Miembros('x');
+		matriz[temp.getX()][temp.getY()] = new Miembros('.');
 	}
 	/**
 	 * Cambia el porcentaje de aparici�n de obstaculos del constructor aleatorio
@@ -410,6 +429,19 @@ public class Entorno {
 		mejor.clear();
 		visitados.clear();
 		caminoFinal.clear();
+	}
+	public void showOptimalStep(int i) {
+		Coordenada temp;
+		if(i == 0) {
+			coche = caminoFinal.get(0);
+			matriz[coche.getX()][coche.getY()] = new Coche();
+			matriz[meta.getX()][meta.getY()] = new Meta(meta);
+		}else {
+		temp = new Coordenada(coche.getX(),coche.getY());
+		coche = caminoFinal.get(i);
+		matriz[coche.getX()][coche.getY()] = matriz[temp.getX()][temp.getY()];
+		matriz[temp.getX()][temp.getY()] = new Miembros('F');
+		}
 	}
 
 
