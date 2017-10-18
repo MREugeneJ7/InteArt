@@ -99,7 +99,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			matriz.setTableHeader(null);
 			matriz.getModel().addTableModelListener(this);
 		}
-		info.setText("DIM:" + backEnd.getMatriz().length + "x" + backEnd.getMatriz()[0].length + "|Porecntaje:" + backEnd.getPorcentaje());
+		info.setText("DIM:" + backEnd.getMatriz().length + "x" + backEnd.getMatriz()[0].length + "|Porecntaje:" + backEnd.getPorcentaje()+"|TTS:"+backEnd.getTTS());
 		for(int i = 0; i < matriz.getColumnCount();i++) {
 			matriz.getColumnModel().getColumn(i).setPreferredWidth(20);
 			matriz.getColumnModel().getColumn(i).setWidth(20);
@@ -125,7 +125,6 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		} finally {
 			timer.start();
 		}
-		
 		pack();	
 	}
 	/**

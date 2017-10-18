@@ -22,6 +22,7 @@ public class Entorno {
 	private static int porcentaje;
 	private static Scanner in;
 	private Coordenada coche,meta;
+	private long tTS;
 	private List<Coordenada> visitados = new ArrayList<Coordenada>();
 	private List<Coordenada> caminoFinal = new ArrayList<Coordenada>();
 	private List<Coordenada> mejor = new ArrayList<Coordenada>();
@@ -247,7 +248,7 @@ public class Entorno {
 					} catch (BadMatrixException e) {
 						System.out.println(e.getMessage());
 					}
-					
+
 					break;
 				case 6:
 					salir = true;
@@ -285,30 +286,75 @@ public class Entorno {
 	 * @throws BadMatrixException 
 	 */
 	public void solve() throws BadMatrixException {
+		tTS = System.currentTimeMillis();
 		restartLists();
 		while(test()) {
 			step();
 			Object[] st = caminoFinal.toArray();
-		    for (Object s : st) {
-		    	if (caminoFinal.indexOf(s) != caminoFinal.lastIndexOf(s)) {
-		    		caminoFinal.remove(caminoFinal.lastIndexOf(s));
-		    	}
-		    }
+			for (Object s : st) {
+				if (caminoFinal.indexOf(s) != caminoFinal.lastIndexOf(s)) {
+					caminoFinal.remove(caminoFinal.lastIndexOf(s));
+				}
+			}
 		}
+		//Limpia los visitados no pertenecientes al camino optimo
 		int tempSize;
 		for(int i = caminoFinal.size()-1; i > 0; i--) {
 			List<Coordenada> aux = caminoFinal.subList(i, caminoFinal.size());
 			for(int j = 0; j < i; j++) {
-				 tempSize = caminoFinal.size();
-				 if(caminoFinal.get(j).dist(caminoFinal.get(i)) == 1) {
-					 caminoFinal = caminoFinal.subList(0,j+1);
-					 caminoFinal.addAll(aux);
-					 tempSize -= caminoFinal.size();
-					 i -= tempSize; 
-		    	}
-		    }
-	    }
-		
+				tempSize = caminoFinal.size();
+				if(caminoFinal.get(j).dist(caminoFinal.get(i)) == 1) {
+					caminoFinal = caminoFinal.subList(0,j+1);
+					caminoFinal.addAll(aux);
+					tempSize -= caminoFinal.size();
+					i -= tempSize; 
+				}
+			}
+		}
+		//Elimina fallos del algoritmo
+		boolean inLine = false;
+		Coordenada opositeDir = new Coordenada(0,0);
+		Coordenada pos = new Coordenada(0,0);
+		for(int i = 0; i < caminoFinal.size() - 1; i++) {
+			if(caminoFinal.get(i).diff(meta).getX() == 0 || caminoFinal.get(i).diff(meta).getY() == 0) { 
+				if(i == 0) break;
+				inLine = true;
+				opositeDir = new Coordenada((int)Math.signum(caminoFinal.get(i).diff(meta).getX()),(int)Math.signum(caminoFinal.get(i).diff(meta).getY()));
+			}
+			if(inLine) {
+				tempSize = caminoFinal.size();
+				List<Coordenada> aux = new ArrayList<Coordenada>(caminoFinal.subList(i, caminoFinal.size()));
+				List<Coordenada> add = new ArrayList<Coordenada>();
+				pos = new Coordenada(caminoFinal.get(i));
+				while(true) {
+					pos.add(opositeDir);
+					if(pos.getX() < matriz.length && pos.getY() < matriz[0].length && pos.getX() > 0 && pos.getY() > 0) {
+						if (caminoFinal.contains(pos)) {
+							caminoFinal = caminoFinal.subList(0,caminoFinal.indexOf(pos) + 1);
+							if(!add.isEmpty()) caminoFinal.addAll(add);
+							caminoFinal.addAll(aux);
+							tempSize -= caminoFinal.size();
+							i -= tempSize;
+							break;
+						}else if(matriz[pos.getX()][pos.getY()].getName() == 'o') {
+							break;
+						} else {
+							add.add(add.size(), new Coordenada(pos));
+						}
+					} else break;
+
+				}
+			}
+		}
+		//Quita duplicados
+		Object[] st = caminoFinal.toArray();
+		for (Object s : st) {
+			if (caminoFinal.indexOf(s) != caminoFinal.lastIndexOf(s)) {
+				caminoFinal.remove(caminoFinal.lastIndexOf(s));
+			}
+		}
+		tTS = System.currentTimeMillis() - tTS;
+
 	}
 	/**
 	 * Hace los calculos necesarios para un �nico paso del problema
@@ -346,6 +392,7 @@ public class Entorno {
 				coche = caminoFinal.get(0);
 				matriz[coche.getX()][coche.getY()] = new Coche();
 				((Coche)matriz[coche.getX()][coche.getY()]).setPosMeta(meta.diff(coche));
+				tTS = System.currentTimeMillis() - tTS;
 				thrower = true;
 			}
 			if(thrower) throw new BadMatrixException("No existen caminos validos");
@@ -437,12 +484,14 @@ public class Entorno {
 			matriz[coche.getX()][coche.getY()] = new Coche();
 			matriz[meta.getX()][meta.getY()] = new Meta(meta);
 		}else {
-		temp = new Coordenada(coche.getX(),coche.getY());
-		coche = caminoFinal.get(i);
-		matriz[coche.getX()][coche.getY()] = matriz[temp.getX()][temp.getY()];
-		matriz[temp.getX()][temp.getY()] = new Miembros('F');
+			temp = new Coordenada(coche.getX(),coche.getY());
+			coche = caminoFinal.get(i);
+			matriz[coche.getX()][coche.getY()] = matriz[temp.getX()][temp.getY()];
+			matriz[temp.getX()][temp.getY()] = new Miembros('F');
 		}
 	}
-
+	public long getTTS() {
+		return tTS;
+	}
 
 };
