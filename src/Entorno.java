@@ -1,3 +1,4 @@
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -311,46 +312,12 @@ public class Entorno {
 				}
 			}
 		}
-		//Elimina fallos del algoritmo
-		boolean inLine = false;
-		Coordenada opositeDir = new Coordenada(0,0);
-		Coordenada pos = new Coordenada(0,0);
-		for(int i = 0; i < caminoFinal.size() - 1; i++) {
-			if(caminoFinal.get(i).diff(meta).getX() == 0 || caminoFinal.get(i).diff(meta).getY() == 0) { 
-				if(i == 0) break;
-				inLine = true;
-				opositeDir = new Coordenada((int)Math.signum(caminoFinal.get(i).diff(meta).getX()),(int)Math.signum(caminoFinal.get(i).diff(meta).getY()));
-			}
-			if(inLine) {
-				tempSize = caminoFinal.size();
-				List<Coordenada> aux = new ArrayList<Coordenada>(caminoFinal.subList(i, caminoFinal.size()));
-				List<Coordenada> add = new ArrayList<Coordenada>();
-				pos = new Coordenada(caminoFinal.get(i));
-				while(true) {
-					pos.add(opositeDir);
-					if(pos.getX() < matriz.length && pos.getY() < matriz[0].length && pos.getX() > 0 && pos.getY() > 0) {
-						if (caminoFinal.contains(pos)) {
-							caminoFinal = caminoFinal.subList(0,caminoFinal.indexOf(pos) + 1);
-							if(!add.isEmpty()) caminoFinal.addAll(add);
-							caminoFinal.addAll(aux);
-							tempSize -= caminoFinal.size();
-							i -= tempSize;
-							break;
-						}else if(matriz[pos.getX()][pos.getY()].getName() == 'o') {
-							break;
-						} else {
-							add.add(add.size(), new Coordenada(pos));
-						}
-					} else break;
-
-				}
-			}
-		}
-		//Quita duplicados
-		Object[] st = caminoFinal.toArray();
+		
+		//Quita duplicados de visitados
+		Object[] st = visitados.toArray();
 		for (Object s : st) {
-			if (caminoFinal.indexOf(s) != caminoFinal.lastIndexOf(s)) {
-				caminoFinal.remove(caminoFinal.lastIndexOf(s));
+			if (visitados.indexOf(s) != visitados.lastIndexOf(s)) {
+				visitados.remove(visitados.lastIndexOf(s));
 			}
 		}
 		tTS = System.currentTimeMillis() - tTS;
@@ -492,6 +459,9 @@ public class Entorno {
 	}
 	public long getTTS() {
 		return tTS;
+	}
+	public List<Coordenada> getVisitados() {
+		return visitados;
 	}
 
 };
