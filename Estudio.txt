@@ -1,0 +1,19 @@
+ESTUDIO EXPERIMENTAL
+ 
+ 1 Tamaño pequeño 25x25
+	
+	Aleatorio 40% de obstáculos
+	 
+	 . H1 (4) -> Valor promedio
+	 . H2 (4)
+	 . H3 (4)
+
+ 2 Tamaño mediano (Cap.max/2)x(Cap.max/2)
+
+	Lo mismo que antes
+
+ 3 Tamaño grande (Cap.max)x(Cap.max)
+
+	Lo mismo que antes
+
+ Hacer capturas de pantalla

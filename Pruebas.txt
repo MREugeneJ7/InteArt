@@ -1,0 +1,22 @@
+PRUEBAS
+
+	25x25 Dist. Euclídea
+
+	1 Tiempo = 39ms Pasos = 61
+	2 Tiempo = 3ms Pasos = 59
+	3 Tiempo = 5ms Pasos = 221 X
+	4 Tiempo = 1ms Pasos = 25 X
+
+	100x100 Dist. Euclídea
+
+	1 Tiempo = 318ms Pasos = 752
+	2 Tiempo = 2741ms Pasos = 1855
+	3 Tiempo = 23104ms Pasos = 5415 X
+	4 Tiempo = 0ms Pasos = 7 X
+
+	200x200 Dist. Euclídea
+
+	1 Tiempo = 423ms Pasos = 559
+	2 Tiempo = 17476ms Pasos = 7551 X
+	3 Tiempo = 2939ms Pasos = 3815 X
+	4 Tiempo = 6177ms Pasos = 5021 X

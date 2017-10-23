@@ -33,7 +33,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private final JFileChooser fc = new JFileChooser();
 	private boolean timerStopper = false;
 	private int j = 0;
-	private javax.swing.Timer timer = new javax.swing.Timer(200, this); 
+	private javax.swing.Timer timer = new javax.swing.Timer(1, this); 
 	/**
 	 * Metodo que observa las acciones realizadas en la interfaz grafica
 	 * 
