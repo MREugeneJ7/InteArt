@@ -4,6 +4,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -28,7 +30,7 @@ import java.io.IOException;
  * @version 1.1.c 10/10/2017
  */
 
-public class VentanaEntorno extends JFrame implements ActionListener, TableModelListener {
+public class VentanaEntorno extends JFrame implements ActionListener, TableModelListener, ChangeListener {
 
 	private static final long serialVersionUID = 1L;
 	private Entorno backEnd;
@@ -41,7 +43,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private final JFileChooser fc = new JFileChooser();
 	private boolean timerStopper = false;
 	private int j = 0;
-	private javax.swing.Timer timer = new javax.swing.Timer(1, this);
+	private javax.swing.Timer timer = new javax.swing.Timer(100, this);
 	protected AudioFormat audioFormat;
 	protected AudioInputStream audioInputStream;
 	protected SourceDataLine sourceDataLine;
@@ -263,6 +265,10 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		matriz.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		createFromFile.addActionListener(this);
 		solve.addActionListener(this);
+		JSlider timerSpeed = new JSlider(JSlider.VERTICAL,
+                1, 200, 100);
+		timerSpeed.addChangeListener(this);
+		timerSpeed.setInverted(true);
 		layout.setHorizontalGroup(
 				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup()
@@ -271,7 +277,9 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 						.addComponent(dibujar)
 						.addComponent(percent)
 						.addComponent(changePercent))
-				.addComponent(panelMatriz)
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(panelMatriz)
+						.addComponent(timerSpeed))
 				.addGroup(layout.createSequentialGroup()
 						.addComponent(aviso)
 						.addComponent(info)
@@ -286,7 +294,9 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 						.addComponent(dibujar)
 						.addComponent(percent)
 						.addComponent(changePercent))
-				.addComponent(panelMatriz)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(panelMatriz)
+						.addComponent(timerSpeed))
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(aviso)
 						.addComponent(info)
@@ -363,5 +373,14 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	  }//end run
 	}//end inner class PlayThread
 	//===================================//
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		JSlider source = (JSlider)e.getSource();
+	    if (!source.getValueIsAdjusting()) {
+	        int ms = (int)source.getValue();
+	        timer = new javax.swing.Timer(ms, this);
+	    }
+		
+	}
 
 }
