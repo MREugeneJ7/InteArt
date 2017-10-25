@@ -1,11 +1,19 @@
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.SourceDataLine;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.*;
 import java.io.File;
@@ -27,13 +35,17 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private JTable matriz;
 	private JTextField n,m,percent;
 	private JPanel panelContenido;
-	private JButton changePercent, createFromFile, solve;
+	private JButton changePercent, createFromFile, solve, dibujar;
 	private JLabel aviso,info;
 	private JScrollPane panelMatriz;
 	private final JFileChooser fc = new JFileChooser();
 	private boolean timerStopper = false;
 	private int j = 0;
-	private javax.swing.Timer timer = new javax.swing.Timer(1, this); 
+	private javax.swing.Timer timer = new javax.swing.Timer(1, this);
+	protected AudioFormat audioFormat;
+	protected AudioInputStream audioInputStream;
+	protected SourceDataLine sourceDataLine;
+	protected boolean stopPlayback = false;
 	/**
 	 * Metodo que observa las acciones realizadas en la interfaz grafica
 	 * 
@@ -58,7 +70,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			}
 			dummy = new String[backEnd.getMatriz().length];
 			dummy = backEnd.getMatriz()[0];
-			matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy)) ;
+			matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy));
 			matriz.setTableHeader(null);
 			matriz.getModel().addTableModelListener(this);
 		} else if(e.getSource() == solve) {
@@ -70,7 +82,12 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			if(timerStopper) return;
 			backEnd.showOptimalStep(j);
 			j++;
-			if(!backEnd.test() && j != 0) timerStopper = true;
+			if(!backEnd.test() && j != 0)  { 
+				createFromFile.setEnabled(true);
+				dibujar.setEnabled(true);
+				stopPlayback = true;
+				timerStopper = true;
+				}
 			dummy = new String[backEnd.getMatriz().length];
 			dummy = backEnd.getMatriz()[0];
 			matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy)) ;
@@ -82,6 +99,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			}
 			panelMatriz.setPreferredSize(new Dimension ((int)matriz.getRowHeight()*backEnd.getMatriz().length, (int)matriz.getRowHeight()*backEnd.getMatriz()[0].length+3));
 			panelMatriz.setColumnHeader(null);
+			scrollToCenter(matriz,backEnd.getCoche().getX(), backEnd.getCoche().getY());
 			panelMatriz.revalidate();
 			panelContenido.revalidate();
 		} else{
@@ -109,24 +127,83 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		if(timerStopper) timer.stop();
 		panelMatriz.revalidate();
 		panelContenido.revalidate();
-		pack();
+		if (e.getSource() != timer && e.getSource() != solve) pack();
 	}
+	private void scrollToCenter(JTable matriz2, int x, int y) {
+			    if (!(matriz2.getParent() instanceof JViewport)) {
+			      return;
+			    }
+			    JViewport viewport = (JViewport) matriz2.getParent();
+			    Rectangle rect = matriz2.getCellRect(x, y, true);
+			    Rectangle viewRect = viewport.getViewRect();
+			    rect.setLocation(rect.x - viewRect.x, rect.y - viewRect.y);
+
+			    int centerX = (viewRect.width - rect.width) / 2;
+			    int centerY = (viewRect.height - rect.height) / 2;
+			    if (rect.x < centerX) {
+			      centerX = -centerX;
+			    }
+			    if (rect.y < centerY) {
+			      centerY = -centerY;
+			    }
+			    rect.translate(centerX, centerY);
+			    viewport.scrollRectToVisible(rect);
+			}
+		
 	/**
 	 * Resuelve el problema
 	 */
 	private void solve() {
 		timerStopper = false;
+		dibujar.setEnabled(false);
+		createFromFile.setEnabled(false);
 		backEnd.restartLists();
 		try {
 			backEnd.solve();
 		} catch (BadMatrixException e) {
 			aviso.setVisible(true);
+			dibujar.setEnabled(true);
+			createFromFile.setEnabled(true);
+			stopPlayback = true;
 			timerStopper = true;
 		} finally {
+			playAudio();
 			timer.start();
-		}
-		pack();	
+		}	
 	}
+	private void playAudio() {
+		    try{
+		      File soundFile =
+		                   new File("brumbrum.wav");
+		      audioInputStream = AudioSystem.
+		                  getAudioInputStream(soundFile);
+		      audioFormat = audioInputStream.getFormat();
+		      System.out.println(audioFormat);
+
+		      DataLine.Info dataLineInfo =
+		                          new DataLine.Info(
+		                            SourceDataLine.class,
+		                                    audioFormat);
+
+		      sourceDataLine =
+		             (SourceDataLine)AudioSystem.getLine(
+		                                   dataLineInfo);
+
+		      //Create a thread to play back the data and
+		      // start it running.  It will run until the
+		      // end of file, or the Stop button is
+		      // clicked, whichever occurs first.
+		      // Because of the data buffers involved,
+		      // there will normally be a delay between
+		      // the click on the Stop button and the
+		      // actual termination of playback.
+		      new PlayThread().start();
+		    }catch (Exception e) {
+		      e.printStackTrace();
+		      System.exit(0);
+		    }//end catch
+		  }//end playAudio
+		
 	/**
 	 * Constructor de la ventana
 	 * @param x Entorno que se muestra en la JTable matriz
@@ -145,11 +222,36 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		n = new JTextField(4);
 		m = new JTextField(4);
 		percent = new JTextField(Integer.toString(backEnd.getPorcentaje()));
-		JButton dibujar = new JButton("Crear Matriz");
+		dibujar = new JButton("Crear Matriz");
 		changePercent = new JButton("%");
 		createFromFile = new JButton("Elegir Fichero");
 		solve = new JButton("Solve");
-		matriz = new JTable();
+		matriz = new JTable(){
+	        /**
+			 * 
+			 */
+			private static final long serialVersionUID = 3297034059953056855L;
+
+			@Override
+	        public Component prepareRenderer(TableCellRenderer renderer, int rowIndex,
+	                int columnIndex) {
+	            JComponent component = (JComponent) super.prepareRenderer(renderer, rowIndex, columnIndex);  
+
+	            if(getValueAt(rowIndex, columnIndex).toString().equalsIgnoreCase("c")) {
+	                component.setBackground(Color.RED);
+	            } else if(getValueAt(rowIndex, columnIndex).toString().equalsIgnoreCase("o")){
+	                component.setBackground(Color.BLACK);
+	            } else if(getValueAt(rowIndex, columnIndex).toString().equalsIgnoreCase("M")){
+	                component.setBackground(Color.GREEN);
+	            } else if(getValueAt(rowIndex, columnIndex).toString().equalsIgnoreCase("F")){
+	                component.setBackground(Color.YELLOW);
+	            } else if(getValueAt(rowIndex, columnIndex).toString().equalsIgnoreCase(".")){
+	                component.setBackground(Color.WHITE);
+	            }
+
+	            return component;
+	        }
+	    };
 		dibujar.addActionListener(this);
 		changePercent.addActionListener(this);
 		matriz.getModel().addTableModelListener(this);
@@ -219,5 +321,47 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		panelContenido.revalidate();
 		pack();
 	}
+	//=============================================//
+	//Inner class to play back the data from the
+	// audio file.
+	class PlayThread extends Thread{
+	  byte tempBuffer[] = new byte[10000];
+
+	  public void run(){
+	    try{
+	      sourceDataLine.open(audioFormat);
+	      sourceDataLine.start();
+
+	      int cnt;
+	      //Keep looping until the input read method
+	      // returns -1 for empty stream or the
+	      // user clicks the Stop button causing
+	      // stopPlayback to switch from false to
+	      // true.
+	      while((cnt = audioInputStream.read(
+	           tempBuffer,0,tempBuffer.length)) != -1
+	                       && stopPlayback == false){
+	        if(cnt > 0){
+	          //Write data to the internal buffer of
+	          // the data line where it will be
+	          // delivered to the speaker.
+	          sourceDataLine.write(
+	                             tempBuffer, 0, cnt);
+	        }//end if
+	      }//end while
+	      //Block and wait for internal buffer of the
+	      // data line to empty.
+	      sourceDataLine.drain();
+	      sourceDataLine.close();
+
+	      //Prepare to playback another file
+	      stopPlayback = false;
+	    }catch (Exception e) {
+	      e.printStackTrace();
+	      System.exit(0);
+	    }//end catch
+	  }//end run
+	}//end inner class PlayThread
+	//===================================//
 
 }

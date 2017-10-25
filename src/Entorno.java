@@ -463,5 +463,9 @@ public class Entorno {
 	public List<Coordenada> getVisitados() {
 		return visitados;
 	}
+	public Coordenada getCoche() {
+		// TODO Auto-generated method stub
+		return coche;
+	}
 
 };
