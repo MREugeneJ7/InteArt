@@ -1,62 +1,62 @@
 PRUEBAS
 
-	25x25 Dist. Manhattan
+	25x25 Dist. Manhattan -> PROMEDIO = 12ms y 92 pasos
 
 	1 Tiempo = 39ms Pasos = 61
 	2 Tiempo = 3ms Pasos = 59
 	3 Tiempo = 5ms Pasos = 221 X
 	4 Tiempo = 1ms Pasos = 25 X
 
-	100x100 Dist. Manhattan
+	100x100 Dist. Manhattan -> PROMEDIO = 6540.75ms y 2008 pasos
 
 	1 Tiempo = 318ms Pasos = 752
 	2 Tiempo = 2741ms Pasos = 1855
 	3 Tiempo = 23104ms Pasos = 5415 X
 	4 Tiempo = 0ms Pasos = 7 X
 
-	200x200 Dist. Manhattan
+	200x200 Dist. Manhattan -> PROMEDIO = 6753.75ms y 4237 pasos
 
 	1 Tiempo = 423ms Pasos = 559
 	2 Tiempo = 17476ms Pasos = 7551 X
 	3 Tiempo = 2939ms Pasos = 3815 X
 	4 Tiempo = 6177ms Pasos = 5021 X
 	
-	25x25 Dist. Euclídea
+	25x25 Dist. Euclídea -> PROMEDIO = 28.75ms y 193 pasos
 	
 	1 Tiempo = 0ms Pasos = 1 X
 	2 Tiempo = 14ms Pasos = 115 X
 	3 Tiempo = 25ms Pasos = 125 X
 	4 Tiempo = 76ms Pasos = 531 X
 	
-	100x100 Dist. Euclídea
+	100x100 Dist. Euclídea -> PROMEDIO = 4227.5ms y 1292 pasos
 	
 	1 Tiempo = 6ms Pasos = 42 
 	2 Tiempo = 7ms Pasos = 57 
 	3 Tiempo = 16866ms Pasos = 4905 X
 	4 Tiempo = 31ms Pasos = 163 X 
 	
-	200x200 Dist. Euclídea
+	200x200 Dist. Euclídea -> PROMEDIO = 935.75ms y 1187 pasos
 
 	1 Tiempo = 1503ms Pasos = 1987 X 
 	1 Tiempo = 19ms Pasos = 111 X 
 	1 Tiempo = 2030ms Pasos = 2285 X 
 	1 Tiempo = 191ms Pasos = 364
 	
-	25x25 Dist. Mahalanobis
+	25x25 Dist. Mahalanobis -> PROMEDIO = 17.5ms y 118 pasos
 
 	1 Tiempo = 67ms  Pasos = 417 X 
 	2 Tiempo = 1ms  Pasos = 18 
 	3 Tiempo = 2ms Pasos = 30 
 	4 Tiempo = 0ms  Pasos = 4 
 
-	100x100 Dist. Mahalanobis
+	100x100 Dist. Mahalanobis -> PROMEDIO = 7998.5ms y 2403 pasos
 
 	1 Tiempo = 2425ms Pasos = 2481 X 
 	2 Tiempo = 2ms Pasos = 9 X
 	3 Tiempo = 23798ms Pasos = 5409 X  
 	4 Tiempo = 5769ms Pasos = 1710 
 	
-	200x200 Dist. Mahalanobis
+	200x200 Dist. Mahalanobis -> PROMEDIO = 1348.5ms y 925 pasos
 
 	1 Tiempo = 5049ms Pasos = 3087 X 
 	2 Tiempo = 3ms Pasos = 19 X
