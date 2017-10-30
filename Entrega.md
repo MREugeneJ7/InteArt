@@ -1,6 +1,6 @@
-#ENTREGA
+# ENTREGA
 
-##ESTUDIO EXPERIMENTAL
+## ESTUDIO EXPERIMENTAL
 
 Aleatorio 40% de obstáculos
 
@@ -20,7 +20,7 @@ Aleatorio 40% de obstáculos
 
 Hacer capturas de pantalla
  
-##INFORME DE LA PRÁCTICA
+## INFORME DE LA PRÁCTICA
  
 1. Introducción
 	- Descripción del problema
