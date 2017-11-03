@@ -44,6 +44,8 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	private boolean timerStopper = false;
 	private int j = 0;
 	private javax.swing.Timer timer = new javax.swing.Timer(100, this);
+	private JRadioButton MNH, EUC, MHL;
+	ButtonGroup metodos;
 	protected AudioFormat audioFormat;
 	protected AudioInputStream audioInputStream;
 	protected SourceDataLine sourceDataLine;
@@ -70,6 +72,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			} else {
 				System.out.println("Open command cancelled by user.");
 			}
+			backEnd.setMode(Integer.parseInt(metodos.getSelection().getActionCommand()));
 			dummy = new String[backEnd.getMatriz().length];
 			dummy = backEnd.getMatriz()[0];
 			matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy));
@@ -104,6 +107,12 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			scrollToCenter(matriz,backEnd.getCoche().getX(), backEnd.getCoche().getY());
 			panelMatriz.revalidate();
 			panelContenido.revalidate();
+		} else if(e.getSource() == MNH) {
+			if(backEnd.test()) backEnd.setMode(0);
+		} else if (e.getSource() == EUC) {
+			if(backEnd.test()) backEnd.setMode(1);
+		} else if(e.getSource() == MHL) {
+			if(backEnd.test()) backEnd.setMode(2);
 		} else{
 			try {
 				backEnd= new Entorno(Integer.parseInt(n.getText()),Integer.parseInt(m.getText()));
@@ -113,6 +122,7 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 			} catch (ConstructorException e1) {
 				aviso.setVisible(true);
 			}
+			backEnd.setMode(Integer.parseInt(metodos.getSelection().getActionCommand()));
 			dummy = new String[backEnd.getMatriz().length];
 			dummy = backEnd.getMatriz()[0];
 			matriz.setModel(new DefaultTableModel(backEnd.getMatriz(),dummy)) ;
@@ -254,6 +264,19 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	            return component;
 	        }
 	    };
+	    MNH = new JRadioButton("Manhattan",true);
+	    MNH.setActionCommand("0");
+	    EUC = new JRadioButton("Euclidea");
+	    EUC.setActionCommand("1");
+	    MHL = new JRadioButton("Mahalanobis");
+	    MHL.setActionCommand("2");
+	    metodos = new ButtonGroup();
+	    metodos.add(MNH);
+	    metodos.add(EUC);
+	    metodos.add(MHL);
+	    MNH.addActionListener(this);
+	    EUC.addActionListener(this);
+	    MHL.addActionListener(this);
 		dibujar.addActionListener(this);
 		changePercent.addActionListener(this);
 		matriz.getModel().addTableModelListener(this);
@@ -279,7 +302,12 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 						.addComponent(changePercent))
 				.addGroup(layout.createSequentialGroup()
 						.addComponent(panelMatriz)
-						.addComponent(timerSpeed))
+						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+								.addComponent(timerSpeed)
+								.addComponent(MNH)
+								.addComponent(EUC)
+								.addComponent(MHL))
+						)
 				.addGroup(layout.createSequentialGroup()
 						.addComponent(aviso)
 						.addComponent(info)
@@ -296,7 +324,12 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 						.addComponent(changePercent))
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(panelMatriz)
-						.addComponent(timerSpeed))
+						.addGroup(layout.createSequentialGroup()
+								.addComponent(timerSpeed)
+								.addComponent(MNH)
+								.addComponent(EUC)
+								.addComponent(MHL))
+						)
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(aviso)
 						.addComponent(info)
@@ -322,7 +355,10 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 		TableModel model = (TableModel)e.getSource();
 		Object data = model.getValueAt(row, column);
 		if("c".equals(data)) backEnd.setMatrizCell(row,column,new Coche());
-		else if("M".equals(data)) backEnd.setMatrizCell(row,column,new Meta(new Coordenada (row,column)));
+		else if("M".equals(data)) {
+			backEnd.setMatrizCell(row,column,new Meta(new Coordenada (row,column)));
+			backEnd.setMode(Integer.parseInt(metodos.getSelection().getActionCommand()));
+		}
 		else if("o".equals(data)) backEnd.setMatrizCell(row,column,new Obstaculo());
 		else backEnd.setMatrizCell(row,column,new Miembros());
 		aviso.setVisible(!backEnd.test());

@@ -170,7 +170,8 @@ public class Entorno {
 			System.out.println("3. Constructor por fichero");
 			System.out.println("4. Elegir porcentaje de obstaculos aleatorios");
 			System.out.println("5. Resolver");
-			System.out.println("6. Salir");
+			System.out.println("6. Elegir metodo");
+			System.out.println("7. Salir");
 			try {
 
 				System.out.println("Escribe una de las opciones");
@@ -252,10 +253,15 @@ public class Entorno {
 
 					break;
 				case 6:
+					System.out.println("Introduzca metodo (1-Mhtn, 2-Eucld, 3-Mhlnbs)");
+					x = in.nextInt();
+					prueba.setMode(x);
+					break;
+				case 7:
 					salir = true;
 					break;
 				default:
-					System.out.println("Solo numeros enteros entre 1 y 6");
+					System.out.println("Solo numeros enteros entre 1 y 7");
 				}
 			} catch (InputMismatchException e) {
 				System.out.println("Debes insertar un numero");
@@ -263,6 +269,10 @@ public class Entorno {
 			}
 		}
 		return prueba;
+	}
+	public void setMode(int x) {
+		((Meta)matriz[meta.getX()][meta.getY()]).setMethod(x);
+		
 	}
 	private void showSolution() {
 		Coordenada temp;
