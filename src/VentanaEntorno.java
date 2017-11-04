@@ -221,6 +221,8 @@ public class VentanaEntorno extends JFrame implements ActionListener, TableModel
 	 * @param x Entorno que se muestra en la JTable matriz
 	 */
 	public VentanaEntorno(Entorno x) {
+		ImageIcon img = new ImageIcon("gpa.jpg");
+		setIconImage(img.getImage());
 		panelContenido = new JPanel();
 		GroupLayout layout = new GroupLayout(panelContenido);
 		panelContenido.setLayout(layout);
