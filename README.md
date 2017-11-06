@@ -1,20 +1,15 @@
-# InteArt
+# Inteligencia Artificial
 
-## ToDo
+## Práctica de búsqueda
 
-### Principales
+Junto con la práctica se encuentra un archivo .jar que será el que deba ejecutarse para iniciar la aplicación (será necesario tener al menos v.8 de java). 
 
-- [x] Comprobar que no pongas las cosas fuera de la matriz
-- [x] En la clase coordenada sobreescribir el operador == o crear un equals
-- [x] Hacer la comprobaci�n de que no pones el obstaculo encima de la meta o el coche
-- [x] Hacer el menu reutilizable que puse que saliese en cada llamada para poder probarlo y eso no es nada �ptimo
+Por defecto, se ejecutará en modo interfaz gráfica (doble click, o lanzado a través de consola sin argumentos). Si desea ejecutar el modo consola deberá ejecutar la siguiente línea:
 
-### Opcionales
+```java -jar <path del ejecutable> -t```
 
-- [ ] No pedirle el numero de obst�culos al usuario en el constructor manual, con un vector de coordenadas dummy de tama�o N*M que luego se copie al vector final de tama�o un contador de numero de veces que has introducido un obstaculo deberia solucionarse y es facil de hacer.
-- [x] Hacer un constructor por fichero
-- [x] Poner comentarios al codigo
-- [x] Hacer el metodo para cambiar el porcentaje
-- [x] Definir variables estaticas con el tama�o maximo
-- [x] Buscar como ponerle un colorcito al coche y a la meta
-- [x] Hacer un GUI
+Si por el contrario desea ejecutar el modo interfaz gráfica desde consola deberá ejecutar:
+
+```java -jar <path del ejecutable> -g```
+
+Puede encontrar más información sobre el uso del programa en el informe adjunto.
