@@ -13,3 +13,5 @@ Si por el contrario desea ejecutar el modo interfaz gráfica desde consola deber
 ```java -jar <path del ejecutable> -g```
 
 Puede encontrar más información sobre el uso del programa en el informe adjunto.
+
+<3
